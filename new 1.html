@@ -1,0 +1,393 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>베트남 진출 기업 브리프</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* Layout: one reading column. Summary and KPI first, then evidence (bars), then actions and cases. Dark slate ground, single teal accent taken from the report's cover color. */
+:root {
+  color-scheme: dark;
+  --bg: #0e1419;
+  --surface: #151d24;
+  --surface2: #1b252d;
+  --line: #253039;
+  --fg: #e8eef2;
+  --fg2: #b4c1ca;
+  --muted: #8393a0;
+  --accent: #6cc6dc;
+  --series2: #b9a2f5;
+  --track: #212c35;
+  --warn: #efb760;
+  --good: #7fd6a8;
+  --font-head: "IBM Plex Sans KR", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  padding-block: 8px 24px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 960px; margin-inline: auto; display: flex; flex-direction: column; gap: 60px; padding-block: 32px 48px; }
+h1, h2, h3, h4 { font-family: var(--font-head); margin: 0; text-wrap: balance; }
+p { margin: 0; }
+.eyebrow { font-family: var(--font-head); font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+
+/* Header */
+header { display: flex; flex-direction: column; gap: 18px; }
+h1 { font-size: clamp(1.9rem, 5.4vw, 2.9rem); font-weight: 700; line-height: 1.22; letter-spacing: -.01em; }
+.lede { color: var(--fg2); font-size: 1.05rem; max-width: 46rem; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: .82rem; color: var(--fg2); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
+
+.bottomline { background: var(--surface2); border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; display: flex; flex-direction: column; gap: 8px; }
+.bottomline p:last-child { font-size: 1.08rem; font-weight: 500; }
+
+/* KPI tiles */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 16px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.kpi .num { font-family: var(--font-head); font-weight: 700; font-size: 2.5rem; line-height: 1.1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; color: var(--accent); }
+.kpi .num small { font-size: 1.2rem; font-weight: 600; margin-left: 2px; }
+.kpi .lab { font-weight: 500; }
+.kpi .sub { font-size: .85rem; color: var(--muted); }
+.note { font-size: .88rem; color: var(--muted); }
+.note b { color: var(--warn); font-weight: 600; }
+
+/* Sections */
+section { display: flex; flex-direction: column; gap: 22px; }
+.sechead { display: flex; flex-direction: column; gap: 6px; }
+h2 { font-size: clamp(1.35rem, 3.4vw, 1.75rem); font-weight: 700; line-height: 1.3; }
+h3 { font-size: 1.02rem; font-weight: 600; line-height: 1.4; }
+.plain { background: var(--surface); border-radius: 10px; padding: 12px 16px; color: var(--fg2); font-size: .95rem; }
+.plain b { color: var(--accent); font-weight: 600; margin-right: 6px; }
+
+/* Facts list */
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 0 32px; }
+.fact { display: grid; grid-template-columns: 8.2rem minmax(0, 1fr); gap: 16px; padding-block: 16px; border-top: 1px solid var(--line); align-items: start; }
+.fact .big { font-family: var(--font-head); font-weight: 700; font-size: 1.55rem; line-height: 1.2; color: var(--fg); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+.fact .big span { color: var(--accent); }
+.fact .txt { color: var(--fg2); font-size: .95rem; }
+.fact .txt b { color: var(--fg); font-weight: 600; display: block; }
+@media (max-width: 520px) { .fact { grid-template-columns: 1fr; gap: 4px; } }
+
+/* Bar charts */
+.panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 430px), 1fr)); gap: 16px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.panel .cap { font-size: .85rem; color: var(--muted); }
+.bars { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+.bar { display: grid; grid-template-columns: minmax(0, 10.5rem) minmax(0, 1fr) 3.7rem; align-items: center; gap: 12px; }
+.bar .l { font-size: .9rem; color: var(--fg2); line-height: 1.4; }
+.bar .t { height: 10px; background: var(--track); }
+.bar .f { display: block; height: 100%; background: var(--accent); border-radius: 0 4px 4px 0; }
+.bar .v { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; font-size: .92rem; }
+.s2 .f { background: var(--series2); }
+@media (max-width: 560px) {
+  .bar { grid-template-columns: minmax(0, 1fr) 3.7rem; grid-template-areas: "l v" "t t"; row-gap: 5px; }
+  .bar .l { grid-area: l; } .bar .v { grid-area: v; } .bar .t { grid-area: t; }
+}
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: .85rem; color: var(--fg2); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; background: var(--accent); }
+.legend .b i { background: var(--series2); }
+.cmp { display: flex; flex-direction: column; gap: 18px; }
+.cmp-row { display: flex; flex-direction: column; gap: 7px; }
+.cmp-row h4 { font-size: .93rem; font-weight: 600; }
+.cmp-row .bar { grid-template-columns: minmax(0, 5.2rem) minmax(0, 1fr) 3.7rem; }
+@media (max-width: 560px) { .cmp-row .bar { grid-template-columns: minmax(0, 1fr) 3.7rem; } }
+
+/* Cards */
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.card .tag { font-family: var(--font-head); font-size: .76rem; font-weight: 600; letter-spacing: .05em; color: var(--accent); }
+.card.warn .tag { color: var(--warn); }
+.card p { color: var(--fg2); font-size: .94rem; }
+.card ul { margin: 0; padding-left: 1.1em; color: var(--fg2); font-size: .94rem; display: flex; flex-direction: column; gap: 4px; }
+.card .stat { font-family: var(--font-head); font-weight: 700; font-size: 1.3rem; font-variant-numeric: tabular-nums; color: var(--fg); }
+.case p b { color: var(--fg); font-weight: 600; margin-right: 6px; }
+.case .use b { color: var(--good); }
+
+/* Industry table */
+.ind { display: grid; grid-template-columns: 8rem repeat(2, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); }
+.ind > div { padding: 14px 16px; border-top: 1px solid var(--line); font-size: .93rem; color: var(--fg2); }
+.ind > .h { border-top: 0; font-family: var(--font-head); font-weight: 600; color: var(--muted); font-size: .8rem; letter-spacing: .04em; background: var(--surface2); }
+.ind > .k { font-family: var(--font-head); font-weight: 600; color: var(--fg); }
+@media (max-width: 640px) {
+  .ind { grid-template-columns: 1fr; }
+  .ind > .h { display: none; }
+  .ind > .k { background: var(--surface2); }
+  .ind > .c1::before { content: "기존 진출 기업  "; color: var(--accent); font-weight: 600; }
+  .ind > .c2::before { content: "신규 검토 기업  "; color: var(--accent); font-weight: 600; }
+}
+
+.list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.list li { padding-block: 12px; border-top: 1px solid var(--line); color: var(--fg2); }
+.list li b { color: var(--fg); font-weight: 600; }
+
+footer { border-top: 1px solid var(--line); padding-top: 20px; color: var(--muted); font-size: .84rem; display: flex; flex-direction: column; gap: 6px; }
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Trade Focus 2026년 25호 · 한국무역협회 국제무역통상연구원</p>
+  <h1>베트남 진출 한국 기업, 92%는 철수할 생각이 없다</h1>
+  <p class="lede">「베트남 진출 한국 기업의 경영 환경 변화와 대응 과제」 보고서의 핵심을 숫자와 실무 사례 중심으로 정리했습니다. 기업 대부분은 베트남에 남아 있고, 손볼 곳은 비용 계산과 운영 방식입니다.</p>
+  <div class="meta">
+    <span class="chip">설문 2026.7.27 ~ 9.16</span>
+    <span class="chip">응답 113개사 (제조업 60 · 서비스업 53)</span>
+    <span class="chip">온라인 설문 + 기업·기관 심층 인터뷰</span>
+  </div>
+</header>
+
+<div class="bottomline">
+  <p class="eyebrow">한 줄 결론</p>
+  <p>남을 이유(상대적 비용우위, 내수시장, ASEAN 거점)는 여전히 유효합니다. 다만 인건비, 규제, 인허가 부담이 커져서 생산·조달·물류·판매 기능별로 사업성을 따로 점검해야 합니다.</p>
+</div>
+
+<section>
+  <div class="kpis">
+    <div class="kpi"><span class="num">92.0<small>%</small></span><span class="lab">철수 의향 없음</span><span class="sub">113개사 중 104개사</span></div>
+    <div class="kpi"><span class="num">81.4<small>%</small></span><span class="lab">진출 당시 핵심 사업목적 유지</span><span class="sub">92개사 (변경은 21개사, 18.6%)</span></div>
+    <div class="kpi"><span class="num">71.7<small>%</small></span><span class="lab">향후에도 핵심 해외거점으로 평가</span><span class="sub">81개사 (불확실 23.9%, 아니다 4.4%)</span></div>
+    <div class="kpi"><span class="num">59.3<small>%</small></span><span class="lab">3~5년 내 사업 개선 전망</span><span class="sub">악화 전망은 12.4%</span></div>
+  </div>
+  <p class="note"><b>읽을 때 주의</b> 설문 대상은 현재 베트남에서 사업 중인 기업입니다. 이미 철수한 기업은 빠져 있어서, 92%를 전체 기업의 철수 동향으로 읽으면 안 됩니다.</p>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="eyebrow">배경</p>
+    <h2>베트남은 이렇게 달라졌다</h2>
+  </div>
+  <div class="facts">
+    <div class="fact"><div class="big">52% <span>→ 86%</span></div><p class="txt"><b>수출 중 공산품 비중 (2006→2024)</b>농산물·광물 위주였던 수출이 공산품 중심으로 바뀌었습니다.</p></div>
+    <div class="fact"><div class="big">52<span>%</span></div><p class="txt"><b>전기기기·기계류가 차지한 수출 증가분 (2006~2023)</b>부품·중간재를 들여와 완제품으로 수출하는 구조가 커졌습니다.</p></div>
+    <div class="fact"><div class="big">945.5<span>억$</span></div><p class="txt"><b>2025년 한·베트남 교역 규모</b>한국의 3위 교역상대국입니다. 2015년에는 4위, 375.8억 달러였고 10년간 연평균 9.7% 늘었습니다.</p></div>
+    <div class="fact"><div class="big">11.4<span>%</span></div><p class="txt"><b>월 최저임금 연평균 상승률 (2010~2024)</b>45.4달러에서 205.3달러가 됐습니다. 생산·운영 비용 부담의 핵심입니다.</p></div>
+    <div class="fact"><div class="big">4.6<span>%</span></div><p class="txt"><b>1인당 가계소비지출 연평균 증가율 (2010~2025)</b>아세안 주요국 중 가장 빠릅니다. 인구 1억 명, GDP 5천억 달러 이상의 내수시장입니다.</p></div>
+    <div class="fact"><div class="big">1,195<span>억$</span></div><p class="txt"><b>대미 수출 (2024), 최대 수출국</b>미국 수요와 관세 등 통상정책 변화가 현지 생산·수출에 바로 영향을 줍니다.</p></div>
+  </div>
+  <p class="plain"><b>쉽게 풀면</b>베트남은 인건비가 싼 공장에서, 아시아 공급망과 미국·유럽 수출, 그리고 1억 명 내수시장을 함께 보는 곳이 됐습니다. 비용이 오른 만큼 기업이 따져볼 것도 늘었습니다.</p>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="eyebrow">동기</p>
+    <h2>왜 갔고, 왜 남는가</h2>
+  </div>
+  <div class="panels">
+    <div class="panel">
+      <h3>진출 결정요인 (1~3순위 합산)</h3>
+      <ul class="bars" role="list">
+        <li class="bar"><span class="l">저렴한 인건비</span><span class="t"><span class="f" style="width:86.7%"></span></span><span class="v">86.7%</span></li>
+        <li class="bar"><span class="l">내수시장 유망성</span><span class="t"><span class="f" style="width:71.7%"></span></span><span class="v">71.7%</span></li>
+        <li class="bar"><span class="l">지리적 이점</span><span class="t"><span class="f" style="width:55.8%"></span></span><span class="v">55.8%</span></li>
+        <li class="bar"><span class="l">정부 인센티브</span><span class="t"><span class="f" style="width:25.7%"></span></span><span class="v">25.7%</span></li>
+        <li class="bar"><span class="l">FTA 활용</span><span class="t"><span class="f" style="width:22.1%"></span></span><span class="v">22.1%</span></li>
+        <li class="bar"><span class="l">대외 리스크 분산</span><span class="t"><span class="f" style="width:14.2%"></span></span><span class="v">14.2%</span></li>
+      </ul>
+      <p class="cap">N=113. 1순위만 보면 내수시장 유망성(40.7%)이 저렴한 인건비(33.6%)보다 앞섭니다.</p>
+    </div>
+    <div class="panel">
+      <h3>잔류 이유 (1~3순위 합산)</h3>
+      <ul class="bars" role="list">
+        <li class="bar"><span class="l">타 국가 대비 비용우위</span><span class="t"><span class="f" style="width:87.5%"></span></span><span class="v">87.5%</span></li>
+        <li class="bar"><span class="l">향후 수익성 개선 기대</span><span class="t"><span class="f" style="width:58.7%"></span></span><span class="v">58.7%</span></li>
+        <li class="bar"><span class="l">ASEAN 거점 이점</span><span class="t"><span class="f" style="width:55.8%"></span></span><span class="v">55.8%</span></li>
+        <li class="bar"><span class="l">현재 수익성 우수</span><span class="t"><span class="f" style="width:45.2%"></span></span><span class="v">45.2%</span></li>
+        <li class="bar"><span class="l">FTA 등 무역협정 활용</span><span class="t"><span class="f" style="width:21.2%"></span></span><span class="v">21.2%</span></li>
+        <li class="bar"><span class="l">베트남 정부 인센티브</span><span class="t"><span class="f" style="width:12.5%"></span></span><span class="v">12.5%</span></li>
+      </ul>
+      <p class="cap">N=104 (철수 의향 없는 기업). 인건비 상승을 애로로 꼽은 기업의 90.8%도 비용우위를 잔류 이유로 선택했습니다.</p>
+    </div>
+  </div>
+  <p class="plain"><b>쉽게 풀면</b>인건비가 올라도 다른 나라와 비교하면 아직 싸다고 보는 기업이 대부분입니다. 사업목적 1순위는 진출 당시와 지금 모두 내수 판매가 가장 많았습니다 (31.0% → 27.4%).</p>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="eyebrow">애로</p>
+    <h2>지금 가장 아픈 곳</h2>
+  </div>
+  <div class="panels">
+    <div class="panel">
+      <h3>주요 경영 애로 (1~3순위 합산)</h3>
+      <ul class="bars" role="list">
+        <li class="bar"><span class="l">정부 규제</span><span class="t"><span class="f" style="width:63.7%"></span></span><span class="v">63.7%</span></li>
+        <li class="bar"><span class="l">인건비 상승</span><span class="t"><span class="f" style="width:62.8%"></span></span><span class="v">62.8%</span></li>
+        <li class="bar"><span class="l">인허가·통관·검역 절차</span><span class="t"><span class="f" style="width:54%"></span></span><span class="v">54.0%</span></li>
+        <li class="bar"><span class="l">내수시장 침체</span><span class="t"><span class="f" style="width:31.9%"></span></span><span class="v">31.9%</span></li>
+        <li class="bar"><span class="l">현지 기업과 불공정 경쟁</span><span class="t"><span class="f" style="width:27.4%"></span></span><span class="v">27.4%</span></li>
+        <li class="bar"><span class="l">환율 변화</span><span class="t"><span class="f" style="width:15%"></span></span><span class="v">15.0%</span></li>
+        <li class="bar"><span class="l">미국 관세·공급망 압력</span><span class="t"><span class="f" style="width:14.2%"></span></span><span class="v">14.2%</span></li>
+      </ul>
+      <p class="cap">N=113. 응답 기업의 절반 이상이 인허가·통관·검역 절차를 애로로 골랐습니다.</p>
+    </div>
+    <div class="panel">
+      <h3>제조업과 서비스업은 아픈 곳이 다르다</h3>
+      <div class="legend"><span><i></i>제조업</span><span class="b"><i></i>서비스업</span></div>
+      <div class="cmp">
+        <div class="cmp-row"><h4>인건비 상승</h4>
+          <ul class="bars" role="list">
+            <li class="bar"><span class="l">제조업</span><span class="t"><span class="f" style="width:73.3%"></span></span><span class="v">73.3%</span></li>
+            <li class="bar s2"><span class="l">서비스업</span><span class="t"><span class="f" style="width:50.9%"></span></span><span class="v">50.9%</span></li>
+          </ul></div>
+        <div class="cmp-row"><h4>인프라·전력 문제</h4>
+          <ul class="bars" role="list">
+            <li class="bar"><span class="l">제조업</span><span class="t"><span class="f" style="width:18.3%"></span></span><span class="v">18.3%</span></li>
+            <li class="bar s2"><span class="l">서비스업</span><span class="t"><span class="f" style="width:3.8%"></span></span><span class="v">3.8%</span></li>
+          </ul></div>
+        <div class="cmp-row"><h4>내수시장 침체</h4>
+          <ul class="bars" role="list">
+            <li class="bar"><span class="l">제조업</span><span class="t"><span class="f" style="width:23.3%"></span></span><span class="v">23.3%</span></li>
+            <li class="bar s2"><span class="l">서비스업</span><span class="t"><span class="f" style="width:41.5%"></span></span><span class="v">41.5%</span></li>
+          </ul></div>
+        <div class="cmp-row"><h4>현지 기업과 불공정 경쟁</h4>
+          <ul class="bars" role="list">
+            <li class="bar"><span class="l">제조업</span><span class="t"><span class="f" style="width:20%"></span></span><span class="v">20.0%</span></li>
+            <li class="bar s2"><span class="l">서비스업</span><span class="t"><span class="f" style="width:35.8%"></span></span><span class="v">35.8%</span></li>
+          </ul></div>
+      </div>
+      <p class="cap">제조업 중 생산시설 보유 기업은 83.3%가 인건비 상승을 애로로 골랐습니다 (미보유 33.3%).</p>
+    </div>
+  </div>
+  <div class="panel">
+    <h3>진출 시기별 차이</h3>
+    <div class="legend"><span><i></i>2016년 이후 진출</span><span class="b"><i></i>2015년 이전 진출</span></div>
+    <div class="cmp">
+      <div class="cmp-row"><h4>인허가·통관·검역 절차</h4>
+        <ul class="bars" role="list">
+          <li class="bar"><span class="l">2016년 이후</span><span class="t"><span class="f" style="width:66.1%"></span></span><span class="v">66.1%</span></li>
+          <li class="bar s2"><span class="l">2015년 이전</span><span class="t"><span class="f" style="width:42.1%"></span></span><span class="v">42.1%</span></li>
+        </ul></div>
+      <div class="cmp-row"><h4>미국 관세·지정학적 공급망 압력</h4>
+        <ul class="bars" role="list">
+          <li class="bar"><span class="l">2016년 이후</span><span class="t"><span class="f" style="width:5.4%"></span></span><span class="v">5.4%</span></li>
+          <li class="bar s2"><span class="l">2015년 이전</span><span class="t"><span class="f" style="width:22.8%"></span></span><span class="v">22.8%</span></li>
+        </ul></div>
+    </div>
+    <p class="cap">수출시장과 사업 형태의 차이도 섞여 있어서, 진출 시기만의 영향으로 해석하기는 어렵습니다.</p>
+  </div>
+  <p class="plain"><b>쉽게 풀면</b>제조업은 사람과 인프라 비용, 서비스업은 내수 침체와 현지 기업과의 경쟁이 더 큰 부담입니다. 최근 진출한 기업일수록 행정 절차에서 어려움을 더 크게 느낍니다.</p>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="eyebrow">전망</p>
+    <h2>전체는 낙관, 따로 봐야 할 곳이 있다</h2>
+  </div>
+  <div class="grid2">
+    <div class="card warn"><span class="tag">주의 업종</span><div class="stat">섬유·의류·신발</div><p>악화 전망 53.8%, 철수 의향 30.8% (13개사). 개선 전망 15.4%로 전체 결과와 따로 점검해야 합니다.</p></div>
+    <div class="card"><span class="tag">전망이 밝은 업종</span><div class="stat">IT·소프트웨어 87.5% · 건설 85.7%</div><p>개선 전망 비율입니다. 각각 8개사, 7개사 응답이라 일반화에는 한계가 있습니다.</p></div>
+    <div class="card warn"><span class="tag">못 떠나는 기업</span><div class="stat">9개사 (8.0%)</div><p>철수 의향은 있지만 현실적 제약으로 남아 있습니다. 이유는 이전 비용(66.7%)과 대체 입지 확보의 어려움(55.6%)입니다.</p></div>
+    <div class="card warn"><span class="tag">통상 압력 체감 기업</span><div class="stat">개선 전망 43.8%</div><p>미국 관세·지정학적 갈등을 애로로 고른 기업은 개선 전망이 낮고 악화 전망은 31.3%로 높았습니다.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="eyebrow">대응</p>
+    <h2>실무에서 할 일 네 가지</h2>
+  </div>
+  <div class="grid2">
+    <div class="card"><span class="tag">기능별 사업성 점검</span><h3>생산·조달·물류·판매를 따로 계산한다</h3>
+      <ul>
+        <li>기능별 매출, 원가, 고객 의존도, 규제 대응 비용을 파악해 거점 역할과 투자 우선순위를 정합니다.</li>
+        <li>인건비 절감액에 설비 이전, 인허가, 물류, 품질관리 비용을 반영해 현지 유지와 공정 분산을 비교합니다.</li>
+        <li>축소·철수는 일부 기능 조정부터 전체 철수까지 대안별 비용, 소요 기간, 거래처 유지, 투자금 회수를 검토합니다.</li>
+      </ul></div>
+    <div class="card"><span class="tag">제조기업</span><h3>공정 개선과 인력 확보·유지를 함께 한다</h3>
+      <ul>
+        <li>공정·직무별로 생산량당 인건비, 결원율, 이직률, 신규 인력 교육 기간을 파악합니다.</li>
+        <li>채용이 어려운 반복 공정은 자동화 투자비와 예상 효과를 비교합니다.</li>
+        <li>핵심 업무의 대체 담당자와 인수인계 자료를 확보해 결원이 생산 중단으로 번지지 않게 합니다.</li>
+      </ul></div>
+    <div class="card"><span class="tag">내수·서비스 기업</span><h3>수요를 검증하고 투자 규모를 단계로 나눈다</h3>
+      <ul>
+        <li>목표 고객의 구매력, 사용 방식, 경쟁제품 가격, 진입 요건을 확인하고 면담이나 시험판매로 수요를 검증합니다.</li>
+        <li>온라인 광고·플랫폼 비용, 오프라인 입점·유통 비용, B2B 계약·납품 조건을 반영해 채널별 수익성을 비교합니다.</li>
+        <li>수요가 예상에 못 미칠 때의 매출과 자금 소요를 보고 초기 투자 규모와 단계별 확대 기준을 정합니다.</li>
+      </ul></div>
+    <div class="card"><span class="tag">규제·계약·권리관계</span><h3>사업계획 단계부터 체계로 만든다</h3>
+      <ul>
+        <li>사업 개시, 설비 변경, 제품 수입에 필요한 허가를 목록으로 만들고 담당 기관, 제출자료, 선행 절차, 예상 소요 기간을 일정에 넣습니다.</li>
+        <li>합작·인수는 의사결정 권한, 파트너 재무 상태, 권리 귀속, 계약 종료 조건을 확인합니다.</li>
+        <li>소비재·서비스는 진출 전 주력 상표를 출원하고, 유통계약에 상표·SNS 계정의 귀속과 종료 시 회수 조건을 적습니다.</li>
+      </ul></div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="eyebrow">사례</p>
+    <h2>인터뷰 기업은 이렇게 대응했다</h2>
+  </div>
+  <div class="grid2">
+    <div class="card case"><span class="tag">제조 · 수출</span><h3>생산 일부를 옮겨도 공급망·물류는 베트남에 둔다</h3>
+      <p><b>상황</b>미국·유럽·일본에 수출하는 기업이 해외 소비 둔화와 주문 감소로 채산성 부담을 겪어 생산 상당 부분을 인도네시아로 이전했습니다.</p>
+      <p class="use"><b>활용</b>조달·물류 기능의 경쟁력이 남아 있으면 기존 거점을 계속 쓸 수 있습니다. 기능별 비용과 유지 효과를 비교해 결정합니다.</p></div>
+    <div class="card case"><span class="tag">제조 · 내수 병행</span><h3>수출 생산 기반으로 내수 판매까지 넓힌다</h3>
+      <p><b>상황</b>주방용품을 생산해 미주·유럽 바이어에 수출하면서 베트남 내수시장에도 판매합니다. OEM·ODM(주문자 브랜드로 생산)과 자체 브랜드를 병행하고, 대형 유통, 일반 유통, 기업 간 거래(B2B), 온라인 채널을 씁니다.</p>
+      <p class="use"><b>활용</b>생산 기반은 그대로 쓰고, 시장별 수요에 맞춰 제품과 판매채널을 조정합니다.</p></div>
+    <div class="card case"><span class="tag">서비스 · IT</span><h3>임금은 올랐지만 인건비 이점은 유효하다</h3>
+      <p><b>상황</b>외국계 IT 기업의 진출이 늘며 IT 인력 임금이 오르고 채용 경쟁이 심해졌습니다. 그래도 인건비 이점은 유효하다고 보며, 다른 해외 후보지도 검토 중입니다(실제 이전 결정은 아님).</p>
+      <p class="use"><b>활용</b>임금 차이만 보지 말고 인력 수준, 본사 협업, 기술 변화의 영향을 함께 점검합니다.</p></div>
+    <div class="card case"><span class="tag">서비스 · LPG</span><h3>수요 성장을 보고 들어가 유통망 기반을 확보한다</h3>
+      <p><b>상황</b>국내 LPG 시장의 성장 한계를 보완하려고 베트남에 진출했습니다. 터미널과 하부 유통망을 연결하는 사업 기반을 중시하고, 기존 사업을 인수해 현지 인력을 활용했습니다.</p>
+      <p class="use"><b>활용</b>터미널·유통망 같은 사업모델의 기반과 실제 고객 수요를 함께 확인합니다. 인수한 사업의 핵심 인력 유지까지 고려합니다.</p></div>
+    <div class="card case"><span class="tag">서비스 · 건설</span><h3>한국식 설계를 그대로 쓰지 않는다</h3>
+      <p><b>상황</b>한국식 아파트 설계를 그대로 적용하지 않고 현지 고객의 선호를 반영해 출입문과 주방 배치 등을 조정했습니다.</p>
+      <p class="use"><b>활용</b>현지 고객의 선호와 생활방식을 상품 설계에 반영하고, 직원의 업무처리 방식과 이직 가능성도 고려해 운영체계를 만듭니다.</p></div>
+    <div class="card case"><span class="tag">화학제품 · 허가</span><h3>허가 결과와 처리 기간을 예측하기 어렵다</h3>
+      <p><b>상황</b>다양한 화학제품을 취급하는 기업이 수출 승인을 받았는데도 베트남 측 허가가 원활하지 않았던 경험을 전했습니다.</p>
+      <p class="use"><b>활용</b>필요한 허가 확보 여부를 확인한 뒤 공급 일정을 확정하고, 지연 가능성을 계약·선적계획에 반영합니다. 품목별 허가 요건과 보완자료를 관리합니다.</p></div>
+    <div class="card case"><span class="tag">합작법인</span><h3>과반 지분이어도 독자 결정은 어렵다</h3>
+      <p><b>상황</b>현지 기업, 한국 기업과 3자 합작으로 진출했습니다. 과반 지분을 가졌지만 일부 결정에 필요한 지분 요건 때문에 독자 판단이 어려웠고 합의에 시간이 걸렸습니다. 이후 다른 주주의 지분을 순차적으로 확보해 단독 운영으로 전환했습니다.</p>
+      <p class="use"><b>활용</b>주요 의사결정의 승인 요건, 파트너 역할, 계약 종료·지분 인수 조건을 함께 점검합니다.</p></div>
+    <div class="card case"><span class="tag">유통 · 상표</span><h3>판매 확대 전에 상표를 먼저 확보한다</h3>
+      <p><b>상황</b>마케팅과 물류를 우선하고 출시를 서두르다 지식재산권 확보가 늦어 상표 무단선점, 제품·브랜드 모방 피해가 생겼습니다.</p>
+      <p class="use"><b>활용</b>상표권 확보와 유통 계약을 먼저 점검하고, 계약이 끝나도 브랜드 자산의 권리를 유지할 조건을 마련합니다.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="eyebrow">업종별 체크</p>
+    <h2>업종마다 먼저 볼 것이 다르다</h2>
+  </div>
+  <div class="ind">
+    <div class="h">업종</div><div class="h">기존 진출 기업</div><div class="h">신규 검토 기업</div>
+    <div class="k">섬유·의류·신발</div><div class="c1">자동화, 공정 분산, 기능 조정의 비용·효과 비교</div><div class="c2">생산량당 인건비, 인력·물류·규제 비용, 수주 가능성 확인</div>
+    <div class="k">그 외 제조업</div><div class="c1">생산성 개선과 숙련 인력의 확보·유지</div><div class="c2">입지별 인력, 조달, 물류, 설비·환경 인허가 검토</div>
+    <div class="k">서비스업</div><div class="c1">고객·채널별 수익성 점검과 서비스 현지화</div><div class="c2">실제 수요, 진입 요건, 수요 부진·허가 지연 시 사업성 검토</div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <p class="eyebrow">지원</p>
+    <h2>지원기관에 요구되는 역할</h2>
+  </div>
+  <ul class="list">
+    <li><b>신규 진출 안내와 기존 기업의 애로 해결을 함께 합니다.</b> 최근 진출 기업에는 정착 절차 정보를, 수출·공급망 연계 기업에는 관세·원산지와 고객의 ESG 요구 대응을 지원합니다.</li>
+    <li><b>생산기업에는 인력과 생산성을 지원합니다.</b> 숙련 인력 확보와 공정 개선 진단을 연계합니다.</li>
+    <li><b>내수·서비스 기업에는 수요와 유통채널 조사를 지원합니다.</b> 소규모 시장검증과 업종별 인허가·세무 상담을 연결합니다.</li>
+    <li><b>사업 재편을 검토하는 기업에는 대안별 비용·절차와 전문상담을 제공합니다.</b> 반복되는 제도 애로는 현지 당국과 협의하고 해결 사례를 공유합니다.</li>
+  </ul>
+</section>
+
+<footer>
+  <p>출처: 한국무역협회 국제무역통상연구원, 「베트남 진출 한국 기업의 경영 환경 변화와 대응 과제」, Trade Focus 2026년 25호 (신무역전략실 임윤호 연구원, 김무현 수석연구원).</p>
+  <p>이 자료는 요약본이며 협회 공식 의견과 다를 수 있습니다. 업종별 응답 기업 수가 적어 세부 수치는 참고용으로 봐야 합니다.</p>
+</footer>
+
+</div>
+
+</body></html>
