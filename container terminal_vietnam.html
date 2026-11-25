@@ -1,0 +1,555 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>베트남 컨테이너 터미널 지도</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+  /* Layout: 항해도 느낌의 한 장짜리 문서. 핵심 요약 → 전국 지도와 번호 목록 → 지역별 확대도 → 실무 활용 → 신규 프로젝트 → 확인 사항. */
+  :root {
+    --paper: #ECF0F1;
+    --panel: #DFE8EA;
+    --ink: #14252D;
+    --ink-soft: #46606A;
+    --land: #CDDBDA;
+    --land-line: #8DA8A8;
+    --rule: #C1CFD1;
+    --signal: #B83B0A;
+    --link: #0B5A74;
+    --font-body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+    --font-code: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0E1A1F;
+      --panel: #132329;
+      --ink: #E6EEEF;
+      --ink-soft: #9DB3BA;
+      --land: #1C3139;
+      --land-line: #3A5762;
+      --rule: #29414B;
+      --signal: #FF8F55;
+      --link: #7CC8E3;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0E1A1F;
+    --panel: #132329;
+    --ink: #E6EEEF;
+    --ink-soft: #9DB3BA;
+    --land: #1C3139;
+    --land-line: #3A5762;
+    --rule: #29414B;
+    --signal: #FF8F55;
+    --link: #7CC8E3;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    padding-block: 2.5rem 4rem;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .page { max-width: 1040px; margin: 0 auto; }
+
+  .kicker {
+    font-family: var(--font-code);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin: 0 0 0.5rem;
+  }
+  h1 {
+    font-size: clamp(1.8rem, 5.5vw, 2.7rem);
+    line-height: 1.2;
+    font-weight: 700;
+    margin: 0 0 1.25rem;
+    text-wrap: balance;
+  }
+  .lead {
+    font-size: 1.12rem;
+    max-width: 40em;
+    margin: 0;
+    padding-left: 1rem;
+    border-left: 3px solid var(--signal);
+    text-wrap: pretty;
+  }
+  .lead strong { font-weight: 700; }
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 3.25rem 0 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+  .sub { margin: -0.5rem 0 1.25rem; color: var(--ink-soft); font-size: 0.95rem; max-width: 42em; }
+
+  .map-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 460px) minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+  }
+  .map-box { background: var(--panel); border: 1px solid var(--rule); padding: 0.5rem; }
+  .map-box svg { display: block; width: 100%; height: auto; }
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem;
+    margin: 0.75rem 0 0; font-size: 0.85rem; color: var(--ink-soft);
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .legend i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; background: var(--signal); }
+  .legend i.plan { background: transparent; border: 2px dashed var(--signal); }
+
+  .terms { list-style: none; margin: 0; padding: 0; }
+  .terms li {
+    display: grid;
+    grid-template-columns: 1.7rem minmax(0, 1fr);
+    gap: 0.7rem;
+    padding: 0.8rem 0.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .terms li:first-child { border-top: 1px solid var(--rule); }
+  .terms li:hover, .terms li:focus-visible { background: var(--panel); outline: none; }
+  .no {
+    width: 1.55rem; height: 1.55rem; border-radius: 50%;
+    border: 1.6px solid var(--signal); color: var(--signal);
+    font-family: var(--font-code); font-size: 0.74rem;
+    display: grid; place-items: center; margin-top: 0.15rem;
+  }
+  .no.plan { border-style: dashed; }
+  .name { font-weight: 700; }
+  .where { color: var(--ink-soft); font-size: 0.88rem; margin-left: 0.4rem; }
+  .terms p { margin: 0.15rem 0 0; font-size: 0.93rem; color: var(--ink-soft); }
+  .terms .state {
+    font-family: var(--font-code); font-size: 0.72rem; letter-spacing: 0.04em;
+    color: var(--signal); margin-left: 0.4rem;
+  }
+  .gl { display: inline-block; margin-top: 0.15rem; font-size: 0.84rem; color: var(--link); }
+
+  .t.on .badge { fill: var(--signal); }
+  .t.on .num { fill: var(--panel); }
+
+  .insets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.75rem 1.5rem; align-items: start; }
+  .insets figure { margin: 0; }
+  .insets figcaption { font-weight: 700; font-size: 0.95rem; margin: 0 0 0.4rem; }
+  .insets figcaption small { font-weight: 400; color: var(--ink-soft); margin-left: 0.4rem; }
+  .insets svg { display: block; width: 100%; height: auto; background: var(--panel); border: 1px solid var(--rule); }
+
+  .cases { margin: 0; }
+  .case {
+    display: grid;
+    grid-template-columns: 11.5rem minmax(0, 1fr);
+    gap: 0.5rem 1.5rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .case:first-child { padding-top: 0; }
+  .case dt { font-weight: 700; }
+  .case dd { margin: 0; max-width: 42em; }
+  .case .eg { display: block; margin-top: 0.4rem; font-size: 0.92rem; color: var(--ink-soft); }
+  .case code { font-family: var(--font-code); font-size: 0.88em; background: var(--panel); padding: 0.1em 0.4em; }
+
+  .facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
+  .facts h3 { font-size: 1.02rem; margin: 0 0 0.5rem; }
+  .facts dl { margin: 0; display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0.35rem 1rem; font-size: 0.93rem; }
+  .facts dt { color: var(--ink-soft); }
+  .facts dd { margin: 0; }
+
+  .note { font-size: 0.92rem; color: var(--ink-soft); max-width: 44em; margin: 0 0 0.75rem; }
+  .src { font-size: 0.9rem; padding-left: 1.2rem; margin: 0; color: var(--ink-soft); }
+  .src a { color: var(--link); }
+
+  @media (max-width: 800px) {
+    .map-grid, .insets, .facts { grid-template-columns: minmax(0, 1fr); }
+    .case { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
+  }
+</style>
+
+<div class="page">
+  <header>
+    <p class="kicker">무역 실무 참고 · 2026.11.24</p>
+    <h1>베트남 컨테이너 터미널 지도</h1>
+    <p class="lead">컨테이너 터미널은 <strong>북부 하이퐁·까이란, 남부 호찌민(깟라이)과 까이멥-티바이</strong>에 모여 있습니다. 중부 다낭에는 대형 신규 터미널(리엔찌에우)이 2026년 4월 착공했고, 호찌민 껀저에는 대형 환적항이 계획되어 있습니다.</p>
+  </header>
+
+  <h2>전국 지도와 터미널 목록</h2>
+  <p class="sub">목록의 15곳을 모두 지도에 표시했습니다. 지도의 숫자는 목록 번호와 같고, 가까이 붙은 터미널은 선으로 이어 따로 표시했습니다.</p>
+  <div class="map-grid">
+    <div>
+      <div class="map-box">
+        <svg id="map" viewBox="0 0 460 690" role="img" aria-label="베트남 컨테이너 터미널 15곳의 위치를 번호로 표시한 약식 지도"></svg>
+      </div>
+      <p class="legend">
+        <span><i></i>운영 중</span>
+        <span><i class="plan"></i>건설 중·계획</span>
+        <span>약식 지도 (위도·경도 기준)</span>
+      </p>
+    </div>
+
+    <ul class="terms" id="list">
+      <li data-id="1" tabindex="0">
+        <span class="no">1</span>
+        <div>
+          <span class="name">까이란 국제컨테이너터미널 (CICT)</span><span class="where">꽝닌 · 북부</span>
+          <p>하롱베이 인근, 하이퐁의 북동쪽에 있는 북부 터미널입니다.</p>
+          <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=20.9760,107.0472" target="_blank" rel="noopener">Google 지도에서 보기</a>
+        </div>
+      </li>
+      <li data-id="2" tabindex="0">
+        <span class="no">2</span>
+        <div>
+          <span class="name">떤부 항</span><span class="where">하이퐁 딘부 · 북부</span>
+          <p>딘부 산업단지 안에 있는 하이퐁의 대표 터미널 중 하나입니다.</p>
+          <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=20.8363,106.7751" target="_blank" rel="noopener">Google 지도에서 보기</a>
+        </div>
+      </li>
+      <li data-id="3" tabindex="0">
+        <span class="no">3</span>
+        <div>
+          <span class="name">남하이딘부 터미널 (NDP)</span><span class="where">하이퐁 딘부 · 북부</span>
+          <p>떤부 항과 이웃한 딘부 지구의 터미널입니다.</p>
+          <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=20.8279,106.7880" target="_blank" rel="noopener">Google 지도에서 보기</a>
+        </div>
+      </li>
+      <li data-id="4" tabindex="0">
+        <span class="no">4</span>
+        <div>
+          <span class="name">락후옌 항</span><span class="where">하이퐁 깟하이섬 · 북부</span>
+          <p>하이퐁의 심수 컨테이너 항구입니다. 이곳의 TC-HICT는 2018년 운영을 시작했습니다.</p>
+          <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=20.7960,106.9042" target="_blank" rel="noopener">Google 지도에서 보기</a>
+        </div>
+      </li>
+      <li data-id="5" tabindex="0">
+        <span class="no">5</span>
+        <div>
+          <span class="name">띠엔사 항</span><span class="where">다낭 · 중부</span>
+          <p>다낭의 기존 항구로 시내와 가깝습니다. 크루즈선도 함께 이용합니다.</p>
+          <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=16.1217,108.2194" target="_blank" rel="noopener">Google 지도에서 보기</a>
+        </div>
+      </li>
+      <li data-id="6" tabindex="0">
+        <span class="no plan">6</span>
+        <div>
+          <span class="name">리엔찌에우 항</span><span class="where">다낭 · 중부</span><span class="state">건설 중</span>
+          <p>2026년 4월 25일 착공한 신규 터미널입니다. Hateco와 APM Terminals가 투자하며 연 570만 TEU 규모를 설계했습니다.</p>
+          <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=16.1429,108.1265" target="_blank" rel="noopener">Google 지도에서 보기</a>
+        </div>
+      </li>
+      <li data-id="7" tabindex="0">
+        <span class="no">7</span>
+        <div>
+          <span class="name">꾸이년 항</span><span class="where">꾸이년 · 중부</span>
+          <p>중부의 중소 규모 항구로, 인근 산업단지 물량이 중심이라는 평이 있습니다.</p>
+          <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=13.7798,109.2395" target="_blank" rel="noopener">Google 지도에서 보기</a>
+        </div>
+      </li>
+      <li data-id="8" tabindex="0">
+        <span class="no">8</span>
+        <div>
+          <span class="name">깟라이 항</span><span class="where">호찌민 · 남부</span>
+          <p>호찌민 시내와 가까운 강변 터미널입니다. 시내 인근 공장 물량의 반출입에 쓰입니다.</p>
+          <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=10.7600,106.7870" target="_blank" rel="noopener">Google 지도에서 보기</a>
+        </div>
+      </li>
+      <li data-id="9" tabindex="0">
+        <span class="no">9</span>
+        <div>
+          <span class="name">SP-ITC</span><span class="where">호찌민 롱쯔엉 · 남부</span>
+          <p>깟라이 인근 강변의 컨테이너 터미널입니다.</p>
+          <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=10.7860,106.8180" target="_blank" rel="noopener">Google 지도에서 보기</a>
+        </div>
+      </li>
+      <li data-id="10" tabindex="0">
+        <span class="no">10</span>
+        <div>
+          <span class="name">TCIT (떤깡-까이멥 국제터미널)</span><span class="where">까이멥-티바이 · 남부</span>
+          <p>까이멥 구역 북쪽 끝에 있습니다. 까이멥-티바이 구역은 대형 선박이 접안하는 심수항 지대로, 호찌민 시내에서 약 70km 떨어져 있습니다.</p>
+          <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=10.5339,107.0344" target="_blank" rel="noopener">Google 지도에서 보기</a>
+        </div>
+      </li>
+      <li data-id="11" tabindex="0">
+        <span class="no">11</span>
+        <div>
+          <span class="name">CMIT (까이멥 국제터미널)</span><span class="where">까이멥-티바이 · 남부</span>
+          <p>까이멥 구역 중앙에 있는 터미널입니다.</p>
+          <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=10.5136,107.0194" target="_blank" rel="noopener">Google 지도에서 보기</a>
+        </div>
+      </li>
+      <li data-id="12" tabindex="0">
+        <span class="no">12</span>
+        <div>
+          <span class="name">SSIT (SP-SSA 국제터미널)</span><span class="where">까이멥-티바이 · 남부</span>
+          <p>CMIT의 남서쪽에 바로 이웃해 있습니다.</p>
+          <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=10.5048,107.0105" target="_blank" rel="noopener">Google 지도에서 보기</a>
+        </div>
+      </li>
+      <li data-id="13" tabindex="0">
+        <span class="no">13</span>
+        <div>
+          <span class="name">Gemalink</span><span class="where">까이멥-티바이 · 남부</span>
+          <p>까이멥 구역 남서쪽 끝에 있는 터미널입니다.</p>
+          <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=10.4984,107.0054" target="_blank" rel="noopener">Google 지도에서 보기</a>
+        </div>
+      </li>
+      <li data-id="14" tabindex="0">
+        <span class="no plan">14</span>
+        <div>
+          <span class="name">껀저 국제환적항</span><span class="where">호찌민 껀저 · 남부</span><span class="state">계획</span>
+          <p>VIMC, 사이공항, MSC 계열 TIL 컨소시엄이 투자자로 선정된 대형 환적항 계획입니다. 지도 위치는 예정지 일대의 대략적인 지점입니다.</p>
+          <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=10.3800,106.9500" target="_blank" rel="noopener">Google 지도에서 대략 위치 보기</a>
+        </div>
+      </li>
+      <li data-id="15" tabindex="0">
+        <span class="no">15</span>
+        <div>
+          <span class="name">까이꾸이 항</span><span class="where">껀터 · 메콩델타</span>
+          <p>메콩델타 지역 물량의 거점 항구입니다.</p>
+          <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=9.9844,105.8334" target="_blank" rel="noopener">Google 지도에서 보기</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <h2>지역별 확대도</h2>
+  <p class="sub">터미널이 가까이 붙어 있는 네 곳을 확대했습니다. 해안선과 수로는 생략했고, 터미널 사이 거리는 축척에 맞춰 그렸습니다. 번호는 위 목록과 같습니다.</p>
+  <div class="insets">
+    <figure>
+      <figcaption>하이퐁·까이란<small>북부</small></figcaption>
+      <svg id="insetN" viewBox="0 0 360 230" role="img" aria-label="하이퐁과 까이란 터미널 위치 확대도"></svg>
+    </figure>
+    <figure>
+      <figcaption>다낭<small>중부</small></figcaption>
+      <svg id="insetC" viewBox="0 0 360 200" role="img" aria-label="다낭 띠엔사 항과 리엔찌에우 항 위치 확대도"></svg>
+    </figure>
+    <figure>
+      <figcaption>호찌민·까이멥<small>남부 광역</small></figcaption>
+      <svg id="insetS" viewBox="0 0 360 330" role="img" aria-label="호찌민 깟라이와 까이멥 지역, 껀저 예정지 위치 확대도"></svg>
+    </figure>
+    <figure>
+      <figcaption>까이멥 터미널군<small>상세</small></figcaption>
+      <svg id="insetD" viewBox="0 0 360 250" role="img" aria-label="까이멥 TCIT, CMIT, SSIT, Gemalink 위치 상세 확대도"></svg>
+    </figure>
+  </div>
+
+  <h2>실무에서 이렇게 씁니다</h2>
+  <dl class="cases">
+    <div class="case">
+      <dt>선적항·양륙항 고르기</dt>
+      <dd>북부 공장 물량은 하이퐁(딘부·락후옌), 호찌민 인근 물량은 깟라이나 까이멥을 기본 후보로 봅니다. 미주·유럽행 직항 선복이 필요하면 대형선이 접안하는 까이멥이 유리한 경우가 많고, 시내 가까운 공장의 단거리 운송은 깟라이가 유리할 수 있습니다. 실제 서비스 노선은 선사 스케줄로 확인하세요.
+        <span class="eg">예) 빈즈엉 공장의 미국행 FCL은 까이멥 직항 노선을, 아시아 역내 소량 건은 깟라이 경유 노선을 견적으로 비교해 봅니다.</span></dd>
+    </div>
+    <div class="case">
+      <dt>터미널 이름까지 적기</dt>
+      <dd>까이멥처럼 한 지역에 터미널이 여럿이면 부킹, B/L, 반출입 지시서에 항구 이름뿐 아니라 터미널 이름까지 적어야 반출입 착오를 줄일 수 있습니다.
+        <span class="eg">예) <code>Place of delivery: Cai Mep – CMIT</code></span></dd>
+    </div>
+    <div class="case">
+      <dt>내륙 운송까지 합쳐 비교</dt>
+      <dd>까이멥은 호찌민 시내에서 약 70km 떨어져 있어, 깟라이와 견적을 비교할 때 항만 이용료 외에 트럭 운송 시간과 비용을 따로 계산해야 합니다.</dd>
+    </div>
+    <div class="case">
+      <dt>중부 신규 터미널 주시</dt>
+      <dd>리엔찌에우 항이 가동되면 중부에서 출발하는 직항 서비스가 늘어날 가능성이 있습니다. 지금은 착공 단계이므로 선적 계획에 넣기보다 모니터링 대상으로 두는 것이 안전합니다.</dd>
+    </div>
+    <div class="case">
+      <dt>껀저 환적항은 장기 변수</dt>
+      <dd>2030년 이후 남부 항만의 물량 구조를 바꿀 수 있는 계획입니다. 남부에 거래처가 많다면 부지 조성과 운영사 선정 소식을 가끔 확인하는 정도로 충분합니다.</dd>
+    </div>
+  </dl>
+
+  <h2>신규 프로젝트 현황</h2>
+  <div class="facts">
+    <div>
+      <h3>리엔찌에우 항 (다낭)</h3>
+      <dl>
+        <dt>착공</dt><dd>2026년 4월 25일</dd>
+        <dt>투자</dt><dd>Hateco Group, Hateco Seaport, APM Terminals</dd>
+        <dt>설계 규모</dt><dd>연 570만 TEU, 선석 8개, 안벽 2,750m</dd>
+        <dt>접안 선박</dt><dd>최대 1만 8천 TEU급</dd>
+        <dt>1단계 목표</dt><dd>가동 3년 뒤 연 400만 TEU</dd>
+      </dl>
+    </div>
+    <div>
+      <h3>껀저 국제환적항 (호찌민)</h3>
+      <dl>
+        <dt>투자자</dt><dd>VIMC, 사이공항, TIL(MSC 계열) 컨소시엄. TIL 지분 49%</dd>
+        <dt>투자 규모</dt><dd>약 49억 달러 (1,288,720억 동)</dd>
+        <dt>부지</dt><dd>약 571ha, 주 부두 약 7.5km</dd>
+        <dt>처리 목표</dt><dd>2030년까지 연 480만 TEU, 2047년까지 1,690만 TEU</dd>
+        <dt>정책 승인</dt><dd>총리가 투자 정책을 1월 16일 승인</dd>
+      </dl>
+    </div>
+  </div>
+
+  <h2>확인이 필요한 사항</h2>
+  <p class="note">터미널 좌표는 Google 지도 기준입니다. 껀저 환적항은 정확한 부지 좌표가 아니라 예정지 일대를 표시했습니다. 터미널별 취항 선사, 수심, 처리 능력, 운영 시간은 선사나 포워더, 터미널 운영사 공지로 최신 내용을 확인하세요.</p>
+  <ol class="src">
+    <li><a href="https://en.baochinhphu.vn/construction-begins-on-mega-lien-chieu-container-terminal-111260425151019321.htm" target="_blank" rel="noopener">Government News, 리엔찌에우 컨테이너 터미널 착공 기사</a></li>
+    <li><a href="https://news.tuoitre.vn/subsidiary-of-global-shipping-company-msc-becomes-investor-of-ho-chi-minh-city-intl-transshipment-port-103260414121414255.htm" target="_blank" rel="noopener">Tuoi Tre News, 껀저 환적항 투자자 선정 기사</a></li>
+    <li><a href="https://vir.com.vn/tc-hict-handles-over-82-million-teus-since-2018-launch-163115.html" target="_blank" rel="noopener">Vietnam Investment Review, TC-HICT 운영 실적 기사</a></li>
+  </ol>
+</div>
+
+<script>
+(function () {
+  var NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs, text) {
+    var n = document.createElementNS(NS, tag);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (text) n.textContent = text;
+    return n;
+  }
+  function halo(o) {
+    o.stroke = "var(--panel)"; o["stroke-width"] = 3.5; o["paint-order"] = "stroke"; o["stroke-linejoin"] = "round";
+    return o;
+  }
+
+  /* ---------- 전국 지도: 모든 터미널을 실제 위치에 점으로, 번호 배지는 선으로 연결 ---------- */
+  var map = document.getElementById("map");
+  var X = function (lng) { return (lng - 100.5) * 42.2; };
+  var Y = function (lat) { return (23.6 - lat) * 44; };
+
+  var outline = [
+    [102.15,22.40],[102.9,22.6],[103.9,22.5],[104.4,23.2],[105.3,23.35],[106.7,22.85],
+    [107.5,21.9],[108.05,21.55],[107.3,21.3],[106.8,20.7],[106.1,20.2],[105.9,19.6],
+    [105.7,18.8],[106.3,18.2],[106.9,17.6],[107.3,16.8],[108.2,16.1],[108.8,15.4],
+    [109.3,14.7],[109.25,13.8],[109.3,13.0],[109.2,12.2],[109.2,11.6],[108.9,11.2],
+    [107.9,10.8],[107.1,10.4],[106.8,10.3],[106.6,9.9],[106.0,9.4],[105.4,8.7],
+    [104.8,8.6],[104.9,9.5],[105.1,10.0],[104.8,10.2],[105.1,10.9],[105.8,11.0],
+    [106.4,11.7],[107.0,12.3],[107.5,12.4],[107.6,13.4],[107.5,14.5],[107.3,15.2],
+    [106.9,16.0],[106.5,16.6],[106.0,17.0],[105.2,17.9],[105.0,18.4],[104.0,19.1],
+    [104.1,19.7],[104.6,20.0],[104.2,20.5],[103.8,20.8],[103.2,20.9],[102.6,21.4],
+    [102.1,21.8],[102.4,22.4]
+  ];
+
+  [20, 15, 10].forEach(function (lat) {
+    map.appendChild(el("line", { x1: 0, x2: 460, y1: Y(lat), y2: Y(lat), stroke: "var(--rule)", "stroke-dasharray": "2 5" }));
+    map.appendChild(el("text", { x: 8, y: Y(lat) - 5, "font-size": 10, "font-family": "var(--font-code)", fill: "var(--ink-soft)" }, "N " + lat + "°"));
+  });
+  [105, 110].forEach(function (lng) {
+    map.appendChild(el("line", { y1: 0, y2: 690, x1: X(lng), x2: X(lng), stroke: "var(--rule)", "stroke-dasharray": "2 5" }));
+    map.appendChild(el("text", { x: X(lng) + 5, y: 682, "font-size": 10, "font-family": "var(--font-code)", fill: "var(--ink-soft)" }, "E " + lng + "°"));
+  });
+  [["중국", 215, 22], ["라오스", 112, 250], ["캄보디아", 96, 500], ["남중국해", 385, 380]].forEach(function (t) {
+    map.appendChild(el("text", { x: t[1], y: t[2], "font-size": 11, "letter-spacing": 2, fill: "var(--ink-soft)", opacity: 0.75 }, t[0]));
+  });
+  map.appendChild(el("polygon", {
+    points: outline.map(function (p) { return X(p[0]).toFixed(1) + "," + Y(p[1]).toFixed(1); }).join(" "),
+    fill: "var(--land)", stroke: "var(--land-line)", "stroke-width": 1.4, "stroke-linejoin": "round"
+  }));
+
+  var groups = {};
+  // id, 이름, 실제 경도·위도, 배지 위치(bx, by), 라벨 방향
+  var T = [
+    { id: 1,  name: "까이란 CICT",    lng: 107.0472, lat: 20.9760, bx: 330, by: 98,  s: "r" },
+    { id: 2,  name: "떤부 항",         lng: 106.7751, lat: 20.8363, bx: 233, by: 104, s: "l" },
+    { id: 3,  name: "남하이딘부 NDP",  lng: 106.7880, lat: 20.8279, bx: 233, by: 140, s: "l" },
+    { id: 4,  name: "락후옌 항",       lng: 106.9042, lat: 20.7960, bx: 330, by: 128, s: "r" },
+    { id: 5,  name: "띠엔사 항",       lng: 108.2194, lat: 16.1217, bx: 368, by: 346, s: "r" },
+    { id: 6,  name: "리엔찌에우 (건설 중)", lng: 108.1265, lat: 16.1429, bx: 278, by: 312, s: "l", plan: true },
+    { id: 7,  name: "꾸이년",          lng: 109.2395, lat: 13.7798, bx: 394, by: 432, s: "r" },
+    { id: 8,  name: "깟라이 항",       lng: 106.7870, lat: 10.7600, bx: 232, by: 566, s: "l" },
+    { id: 9,  name: "SP-ITC",          lng: 106.8180, lat: 10.7860, bx: 232, by: 540, s: "l" },
+    { id: 10, name: "TCIT",            lng: 107.0344, lat: 10.5339, bx: 336, by: 548, s: "r" },
+    { id: 11, name: "CMIT",            lng: 107.0194, lat: 10.5136, bx: 336, by: 572, s: "r" },
+    { id: 12, name: "SSIT",            lng: 107.0105, lat: 10.5048, bx: 336, by: 596, s: "r" },
+    { id: 13, name: "Gemalink",        lng: 107.0054, lat: 10.4984, bx: 336, by: 620, s: "r" },
+    { id: 14, name: "껀저 (예정)",      lng: 106.9500, lat: 10.3800, bx: 336, by: 644, s: "r", plan: true },
+    { id: 15, name: "까이꾸이 항",     lng: 105.8334, lat: 9.9844,  bx: 190, by: 600, s: "l" }
+  ];
+
+  T.forEach(function (t) {
+    var x = X(t.lng), y = Y(t.lat);
+    var g = el("g", { "class": "t", "data-id": t.id });
+    g.appendChild(el("line", { x1: x, y1: y, x2: t.bx, y2: t.by, stroke: "var(--signal)", "stroke-width": 1, opacity: 0.7 }));
+    if (t.plan) {
+      g.appendChild(el("circle", { cx: x, cy: y, r: 3.4, fill: "var(--panel)", stroke: "var(--signal)", "stroke-width": 1.4, "stroke-dasharray": "2 1.5" }));
+    } else {
+      g.appendChild(el("circle", { cx: x, cy: y, r: 3.2, fill: "var(--signal)" }));
+    }
+    var b = { "class": "badge", cx: t.bx, cy: t.by, r: 9, fill: "var(--panel)", stroke: "var(--signal)", "stroke-width": 1.6 };
+    if (t.plan) b["stroke-dasharray"] = "3 2";
+    g.appendChild(el("circle", b));
+    g.appendChild(el("text", { "class": "num", x: t.bx, y: t.by + 3.8, "text-anchor": "middle", "font-size": 10.5, "font-family": "var(--font-code)", "font-weight": 500, fill: "var(--signal)" }, String(t.id)));
+    var left = t.s === "l";
+    g.appendChild(el("text", halo({
+      x: left ? t.bx - 14 : t.bx + 14, y: t.by + 4.5, "text-anchor": left ? "end" : "start",
+      "font-size": 12, "font-weight": 700, fill: "var(--ink)"
+    }), t.name));
+    map.appendChild(g);
+    groups[t.id] = g;
+  });
+
+  /* ---------- 확대도 ---------- */
+  // c: lng0, lat1, s(위도 1도당 px), cos(경도 보정), ox, oy, H, km(축척 막대), pts
+  function inset(id, c) {
+    var svg = document.getElementById(id);
+    var x = function (lng) { return (lng - c.lng0) * c.s * c.cos + c.ox; };
+    var y = function (lat) { return (c.lat1 - lat) * c.s + c.oy; };
+    var barPx = c.km / 111.2 * c.s;
+    var by = c.H - 18;
+    svg.appendChild(el("line", { x1: 14, x2: 14 + barPx, y1: by, y2: by, stroke: "var(--ink-soft)", "stroke-width": 2 }));
+    svg.appendChild(el("line", { x1: 14, x2: 14, y1: by - 4, y2: by + 4, stroke: "var(--ink-soft)", "stroke-width": 2 }));
+    svg.appendChild(el("line", { x1: 14 + barPx, x2: 14 + barPx, y1: by - 4, y2: by + 4, stroke: "var(--ink-soft)", "stroke-width": 2 }));
+    svg.appendChild(el("text", { x: 14 + barPx + 8, y: by + 4, "font-size": 11, "font-family": "var(--font-code)", fill: "var(--ink-soft)" }, c.km + " km"));
+    c.pts.forEach(function (p) {
+      var px = x(p.lng), py = y(p.lat);
+      if (p.plan) {
+        svg.appendChild(el("circle", { cx: px, cy: py, r: 5, fill: "var(--panel)", stroke: "var(--signal)", "stroke-width": 2, "stroke-dasharray": "2.5 2" }));
+      } else {
+        svg.appendChild(el("circle", { cx: px, cy: py, r: 5, fill: "var(--signal)", stroke: "var(--panel)", "stroke-width": 2 }));
+      }
+      svg.appendChild(el("text", halo({
+        x: px + p.dx, y: py + p.dy, "text-anchor": p.a, "font-size": 12, "font-weight": 700, fill: "var(--ink)"
+      }), p.name));
+    });
+  }
+
+  inset("insetN", { lng0: 106.6, lat1: 21.02, s: 620, cos: 0.934, ox: 30, oy: 25, H: 230, km: 10, pts: [
+    { name: "1 · 까이란 CICT",      lng: 107.0472, lat: 20.9760, dx: -9, dy: 4,  a: "end" },
+    { name: "2 · 떤부 항",          lng: 106.7751, lat: 20.8363, dx: -9, dy: -4, a: "end" },
+    { name: "3 · 남하이딘부 NDP",   lng: 106.7880, lat: 20.8279, dx: 9,  dy: -4, a: "start" },
+    { name: "4 · 락후옌 항",        lng: 106.9042, lat: 20.7960, dx: 9,  dy: 4,  a: "start" }
+  ]});
+
+  inset("insetC", { lng0: 108.08, lat1: 16.18, s: 1500, cos: 0.961, ox: 40, oy: 25, H: 200, km: 5, pts: [
+    { name: "6 · 리엔찌에우 (건설 중)", lng: 108.1265, lat: 16.1429, dx: 9, dy: 4, a: "start", plan: true },
+    { name: "5 · 띠엔사 항",            lng: 108.2194, lat: 16.1217, dx: 9, dy: 4, a: "start" }
+  ]});
+
+  inset("insetS", { lng0: 106.7, lat1: 10.82, s: 560, cos: 0.983, ox: 50, oy: 20, H: 330, km: 10, pts: [
+    { name: "9 · SP-ITC",           lng: 106.818,  lat: 10.786, dx: 9,  dy: 4, a: "start" },
+    { name: "8 · 깟라이 항",        lng: 106.787,  lat: 10.760, dx: -9, dy: 4, a: "end" },
+    { name: "10–13 까이멥",         lng: 107.017,  lat: 10.512, dx: 9,  dy: 4, a: "start" },
+    { name: "14 · 껀저 환적항 (예정지)", lng: 106.95, lat: 10.38, dx: 9, dy: 4, a: "start", plan: true }
+  ]});
+
+  inset("insetD", { lng0: 106.98, lat1: 10.56, s: 2400, cos: 0.983, ox: 60, oy: 25, H: 250, km: 2, pts: [
+    { name: "10 · TCIT",     lng: 107.0344, lat: 10.5339, dx: 9,  dy: 4, a: "start" },
+    { name: "11 · CMIT",     lng: 107.0194, lat: 10.5136, dx: 9,  dy: 4, a: "start" },
+    { name: "12 · SSIT",     lng: 107.0105, lat: 10.5048, dx: -9, dy: 4, a: "end" },
+    { name: "13 · Gemalink", lng: 107.0054, lat: 10.4984, dx: -9, dy: 4, a: "end" }
+  ]});
+
+  /* ---------- 목록 ↔ 지도 강조 ---------- */
+  function setOn(id, on) {
+    var g = groups[id];
+    if (g) g.setAttribute("class", on ? "t on" : "t");
+  }
+  document.querySelectorAll("#list li").forEach(function (li) {
+    var id = li.getAttribute("data-id");
+    li.addEventListener("mouseenter", function () { setOn(id, true); });
+    li.addEventListener("mouseleave", function () { setOn(id, false); });
+    li.addEventListener("focus", function () { setOn(id, true); });
+    li.addEventListener("blur", function () { setOn(id, false); });
+  });
+})();
+</script>
+
+</body></html>
