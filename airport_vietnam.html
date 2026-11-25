@@ -1,0 +1,386 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>베트남 공항 지도</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+  /* Layout: 항공 차트 느낌의 한 장짜리 문서. 핵심 요약 → 지도와 목록 → 실무 활용 → 확인 사항 순서. */
+  :root {
+    --paper: #EDF1F1;
+    --panel: #E1E9EA;
+    --ink: #15262E;
+    --ink-soft: #46606A;
+    --land: #CFDCDB;
+    --land-line: #8FA9A9;
+    --rule: #C3D0D1;
+    --signal: #B83B0A;
+    --font-body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+    --font-code: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0F1B20;
+      --panel: #13242B;
+      --ink: #E6EEEF;
+      --ink-soft: #9DB3BA;
+      --land: #1D323A;
+      --land-line: #3A5762;
+      --rule: #29414B;
+      --signal: #FF8F55;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0F1B20;
+    --panel: #13242B;
+    --ink: #E6EEEF;
+    --ink-soft: #9DB3BA;
+    --land: #1D323A;
+    --land-line: #3A5762;
+    --rule: #29414B;
+    --signal: #FF8F55;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    padding-block: 2.5rem 4rem;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .page { max-width: 1000px; margin: 0 auto; }
+
+  .kicker {
+    font-family: var(--font-code);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin: 0 0 0.5rem;
+  }
+  h1 {
+    font-size: clamp(1.8rem, 5.5vw, 2.7rem);
+    line-height: 1.2;
+    font-weight: 700;
+    margin: 0 0 1.25rem;
+    text-wrap: balance;
+  }
+  .lead {
+    font-size: 1.15rem;
+    max-width: 38em;
+    margin: 0;
+    padding-left: 1rem;
+    border-left: 3px solid var(--signal);
+    text-wrap: pretty;
+  }
+  .lead strong { font-weight: 700; }
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 3.25rem 0 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .map-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+  }
+  .map-box {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    padding: 0.5rem;
+  }
+  .map-box svg { display: block; width: 100%; height: auto; }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    margin: 0.75rem 0 0;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .legend i {
+    width: 11px; height: 11px; border-radius: 50%;
+    display: inline-block;
+    background: var(--signal);
+  }
+  .legend i.plan { background: transparent; border: 2px dashed var(--signal); }
+
+  .airports { list-style: none; margin: 0; padding: 0; }
+  .airports li {
+    display: grid;
+    grid-template-columns: 3.4rem minmax(0, 1fr);
+    gap: 0.9rem;
+    padding: 0.85rem 0.5rem;
+    border-bottom: 1px solid var(--rule);
+    cursor: default;
+  }
+  .airports li:first-child { border-top: 1px solid var(--rule); }
+  .airports li:hover, .airports li:focus-visible { background: var(--panel); outline: none; }
+  .code {
+    font-family: var(--font-code);
+    font-weight: 500;
+    font-size: 1.05rem;
+    color: var(--signal);
+    padding-top: 0.1rem;
+  }
+  .code.plan { font-size: 0.8rem; line-height: 1.5; }
+  .name { font-weight: 700; }
+  .where { color: var(--ink-soft); font-size: 0.9rem; margin-left: 0.4rem; }
+  .airports p { margin: 0.15rem 0 0; font-size: 0.95rem; color: var(--ink-soft); }
+
+  .cases { margin: 0; display: grid; gap: 0; }
+  .case {
+    display: grid;
+    grid-template-columns: 11rem minmax(0, 1fr);
+    gap: 0.5rem 1.5rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .case:first-child { padding-top: 0; }
+  .case dt { font-weight: 700; }
+  .case dd { margin: 0; max-width: 40em; }
+  .case .eg {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+  .case code {
+    font-family: var(--font-code);
+    font-size: 0.88em;
+    background: var(--panel);
+    padding: 0.1em 0.4em;
+  }
+
+  .note {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    max-width: 42em;
+    margin: 0;
+  }
+
+  @media (max-width: 760px) {
+    .map-grid { grid-template-columns: minmax(0, 1fr); }
+    .case { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .pin { transition: transform 0.15s ease; }
+  }
+</style>
+
+<div class="page">
+  <header>
+    <p class="kicker">무역 실무 참고 · 2026.11.24</p>
+    <h1>베트남 주요 국제공항</h1>
+    <p class="lead">베트남 항공 물류는 <strong>북부 하노이(HAN), 중부 다낭(DAD), 남부 호찌민(SGN)</strong>의 세 축으로 보면 됩니다. 호찌민 근교 롱탄은 현재 건설 중인 신규 공항입니다.</p>
+  </header>
+
+  <h2>지도와 공항 목록</h2>
+  <div class="map-grid">
+    <div>
+      <div class="map-box">
+        <svg id="map" viewBox="0 0 440 620" role="img" aria-label="베트남 주요 국제공항 7곳의 위치를 표시한 약식 지도"></svg>
+      </div>
+      <p class="legend">
+        <span><i></i>운영 중</span>
+        <span><i class="plan"></i>건설 중</span>
+        <span>약식 지도 (위도·경도 기준)</span>
+      </p>
+    </div>
+
+    <ol class="airports" id="list">
+      <li data-code="HAN" tabindex="0">
+        <span class="code">HAN</span>
+        <div>
+          <span class="name">노이바이 국제공항</span><span class="where">하노이 · 북부</span>
+          <p>북부의 관문입니다. 하노이 인근 산업단지 물량이 모이는 곳입니다.</p>
+        </div>
+      </li>
+      <li data-code="HPH" tabindex="0">
+        <span class="code">HPH</span>
+        <div>
+          <span class="name">깟비 국제공항</span><span class="where">하이퐁 · 북부</span>
+          <p>하이퐁 시내에서 약 5km 떨어진 소규모 공항입니다. 하롱베이와 깟바섬 방면 접근이 편합니다.</p>
+        </div>
+      </li>
+      <li data-code="DAD" tabindex="0">
+        <span class="code">DAD</span>
+        <div>
+          <span class="name">다낭 국제공항</span><span class="where">다낭 · 중부</span>
+          <p>중부 최대 공항입니다. 시내에서 약 3km로 가깝고 호이안 접근에 유리합니다.</p>
+        </div>
+      </li>
+      <li data-code="CXR" tabindex="0">
+        <span class="code">CXR</span>
+        <div>
+          <span class="name">깜란 국제공항</span><span class="where">냐짱 · 중남부</span>
+          <p>냐짱 시내까지 차로 약 40분 걸립니다.</p>
+        </div>
+      </li>
+      <li data-code="SGN" tabindex="0">
+        <span class="code">SGN</span>
+        <div>
+          <span class="name">떤선녓 국제공항</span><span class="where">호찌민 · 남부</span>
+          <p>남부의 관문이자 베트남에서 가장 붐비는 공항 중 하나입니다. 시내와 가깝습니다.</p>
+        </div>
+      </li>
+      <li data-code="LT" tabindex="0">
+        <span class="code plan">건설<br>중</span>
+        <div>
+          <span class="name">롱탄 국제공항</span><span class="where">동나이 · 남부</span>
+          <p>호찌민 시내에서 약 40km 거리의 신규 허브 공항입니다. 개항 후 SGN의 기능 일부를 나눠 맡을 예정입니다.</p>
+        </div>
+      </li>
+      <li data-code="PQC" tabindex="0">
+        <span class="code">PQC</span>
+        <div>
+          <span class="name">푸꾸옥 국제공항</span><span class="where">푸꾸옥섬 · 서남부</span>
+          <p>섬의 관광 거점 공항입니다. 중심 도시에서 남쪽으로 약 10~15km 거리입니다.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <h2>실무에서 이렇게 씁니다</h2>
+  <dl class="cases">
+    <div class="case">
+      <dt>항공화물 도착지(POD) 선택</dt>
+      <dd>생산지에서 가까운 공항을 고르면 내륙 운송비와 시간이 줄어듭니다. 하노이 인근(박닌, 타이응우옌 등)의 전자부품은 HAN, 호찌민 인근(빈즈엉, 동나이)의 의류·신발·가구는 SGN으로 잡는 것이 기본입니다.
+        <span class="eg">예) 박닌 공장 샘플을 급송할 때 도착지를 SGN으로 지정하면 국내 구간이 길어져 오히려 늦어집니다.</span></dd>
+    </div>
+    <div class="case">
+      <dt>하이퐁 물량의 긴급 건</dt>
+      <dd>하이퐁은 항만이 강점이라 해상 물량이 중심입니다. 항공으로 급히 보낼 때는 소규모인 HPH보다 약 1시간 거리의 HAN을 쓰는 경우가 많습니다. 취항 노선과 화물 편은 포워더에 먼저 확인하세요.</dd>
+    </div>
+    <div class="case">
+      <dt>바이어·공장 출장 동선</dt>
+      <dd>북부 거래처는 HAN, 남부 거래처는 SGN으로 들어가면 됩니다. 중부 거래처가 다낭 인근이면 환승 없이 DAD로 바로 입국하는 편이 효율적입니다.</dd>
+    </div>
+    <div class="case">
+      <dt>계약서·선적서류 표기</dt>
+      <dd>공항 이름은 영문 정식 명칭과 IATA 코드를 함께 적으면 혼동이 줄어듭니다.
+        <span class="eg">예) <code>FCA Noi Bai International Airport (HAN), Vietnam</code></span></dd>
+    </div>
+    <div class="case">
+      <dt>롱탄 개항 모니터링</dt>
+      <dd>개항하면 SGN 물량 일부가 이동할 수 있습니다. 호찌민 인근 거래처가 있다면 개항 일정과 화물터미널 운영 계획을 미리 확인해 두세요. 시내와 약 40km 떨어져 있어 내륙 운송 시간도 달라집니다.</dd>
+    </div>
+  </dl>
+
+  <h2>확인이 필요한 사항</h2>
+  <p class="note">공항 위치는 Google 지도 기준입니다. 공항별 화물 취급 능력, 취항 노선, 롱탄 공항의 개항 일정은 변동될 수 있으니 항공사, 포워더, 공항공사(ACV) 공지로 최신 내용을 확인하세요.</p>
+</div>
+
+<script>
+(function () {
+  var NS = "http://www.w3.org/2000/svg";
+  var svg = document.getElementById("map");
+  var X = function (lng) { return (lng - 100.5) * 36; };
+  var Y = function (lat) { return (23.6 - lat) * 37; };
+
+  // 베트남 약식 윤곽 [경도, 위도]
+  var outline = [
+    [102.15,22.40],[102.9,22.6],[103.9,22.5],[104.4,23.2],[105.3,23.35],[106.7,22.85],
+    [107.5,21.9],[108.05,21.55],[107.3,21.3],[106.8,20.7],[106.1,20.2],[105.9,19.6],
+    [105.7,18.8],[106.3,18.2],[106.9,17.6],[107.3,16.8],[108.2,16.1],[108.8,15.4],
+    [109.3,14.7],[109.25,13.8],[109.3,13.0],[109.2,12.2],[109.2,11.6],[108.9,11.2],
+    [107.9,10.8],[107.1,10.4],[106.8,10.3],[106.6,9.9],[106.0,9.4],[105.4,8.7],
+    [104.8,8.6],[104.9,9.5],[105.1,10.0],[104.8,10.2],[105.1,10.9],[105.8,11.0],
+    [106.4,11.7],[107.0,12.3],[107.5,12.4],[107.6,13.4],[107.5,14.5],[107.3,15.2],
+    [106.9,16.0],[106.5,16.6],[106.0,17.0],[105.2,17.9],[105.0,18.4],[104.0,19.1],
+    [104.1,19.7],[104.6,20.0],[104.2,20.5],[103.8,20.8],[103.2,20.9],[102.6,21.4],
+    [102.1,21.8],[102.4,22.4]
+  ];
+
+  var airports = [
+    { code: "HAN", name: "하노이",   lng: 105.8026, lat: 21.2178, side: "l" },
+    { code: "HPH", name: "하이퐁",   lng: 106.7230, lat: 20.8186, side: "r" },
+    { code: "DAD", name: "다낭",     lng: 108.2025, lat: 16.0570, side: "r" },
+    { code: "CXR", name: "냐짱",     lng: 109.2190, lat: 11.9981, side: "r" },
+    { code: "SGN", name: "호찌민",   lng: 106.6566, lat: 10.8170, side: "l" },
+    { code: "LT",  name: "롱탄 (건설 중)", lng: 107.0409, lat: 10.7728, side: "r", plan: true },
+    { code: "PQC", name: "푸꾸옥",   lng: 103.9980, lat: 10.1628, side: "l" }
+  ];
+
+  function el(tag, attrs, text) {
+    var n = document.createElementNS(NS, tag);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (text) n.textContent = text;
+    return n;
+  }
+
+  // 위도·경도 눈금선
+  [20, 15, 10].forEach(function (lat) {
+    svg.appendChild(el("line", { x1: 0, x2: 440, y1: Y(lat), y2: Y(lat), stroke: "var(--rule)", "stroke-dasharray": "2 5" }));
+    svg.appendChild(el("text", { x: 8, y: Y(lat) - 5, "font-size": 10, "font-family": "var(--font-code)", fill: "var(--ink-soft)" }, "N " + lat + "°"));
+  });
+  [105, 110].forEach(function (lng) {
+    svg.appendChild(el("line", { y1: 0, y2: 620, x1: X(lng), x2: X(lng), stroke: "var(--rule)", "stroke-dasharray": "2 5" }));
+    svg.appendChild(el("text", { x: X(lng) + 5, y: 612, "font-size": 10, "font-family": "var(--font-code)", fill: "var(--ink-soft)" }, "E " + lng + "°"));
+  });
+
+  // 주변 지명
+  [["중국", 205, 22], ["라오스", 112, 215], ["캄보디아", 112, 420], ["남중국해", 355, 330]].forEach(function (t) {
+    svg.appendChild(el("text", { x: t[1], y: t[2], "font-size": 11, "letter-spacing": 2, fill: "var(--ink-soft)", opacity: 0.75 }, t[0]));
+  });
+
+  // 국토
+  var pts = outline.map(function (p) { return X(p[0]).toFixed(1) + "," + Y(p[1]).toFixed(1); }).join(" ");
+  svg.appendChild(el("polygon", { points: pts, fill: "var(--land)", stroke: "var(--land-line)", "stroke-width": 1.4, "stroke-linejoin": "round" }));
+
+  // 공항 표시
+  var pins = {};
+  airports.forEach(function (a) {
+    var cx = X(a.lng), cy = Y(a.lat);
+    var g = el("g", { "class": "pin" });
+    g.style.transformBox = "fill-box";
+    g.style.transformOrigin = "center";
+    if (a.plan) {
+      g.appendChild(el("circle", { cx: cx, cy: cy, r: 5.5, fill: "var(--panel)", stroke: "var(--signal)", "stroke-width": 2, "stroke-dasharray": "2.5 2" }));
+    } else {
+      g.appendChild(el("circle", { cx: cx, cy: cy, r: 5.5, fill: "var(--signal)", stroke: "var(--panel)", "stroke-width": 2 }));
+    }
+    svg.appendChild(g);
+    pins[a.code] = g;
+
+    var left = a.side === "l";
+    var t = el("text", {
+      x: left ? cx - 11 : cx + 11, y: cy + 4,
+      "text-anchor": left ? "end" : "start",
+      "font-size": 13, "font-weight": 700, fill: "var(--ink)",
+      stroke: "var(--panel)", "stroke-width": 3.5, "paint-order": "stroke", "stroke-linejoin": "round"
+    });
+    t.appendChild(document.createTextNode(a.name + " "));
+    if (!a.plan) {
+      var code = el("tspan", { "font-family": "var(--font-code)", "font-weight": 500, "font-size": 11.5, fill: "var(--signal)" }, a.code);
+      t.appendChild(code);
+    }
+    svg.appendChild(t);
+  });
+
+  // 목록에 올리면 지도 핀을 키움
+  var items = document.querySelectorAll("#list li");
+  function setOn(code, on) {
+    var g = pins[code];
+    if (g) g.style.transform = on ? "scale(1.6)" : "";
+  }
+  items.forEach(function (li) {
+    var c = li.getAttribute("data-code");
+    li.addEventListener("mouseenter", function () { setOn(c, true); });
+    li.addEventListener("mouseleave", function () { setOn(c, false); });
+    li.addEventListener("focus", function () { setOn(c, true); });
+    li.addEventListener("blur", function () { setOn(c, false); });
+  });
+})();
+</script>
+
+</body></html>
