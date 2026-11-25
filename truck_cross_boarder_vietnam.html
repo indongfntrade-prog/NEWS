@@ -1,0 +1,754 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>베트남 중국 육로 관문 지도</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+  /* Layout: 국경 지대를 가로로 길게 보여주는 한 장짜리 문서. 핵심 요약 → 전국 국경 지도 → 번호 목록 → 확대도 → 실무 활용 → 최근 동향 → 확인 사항. */
+  :root {
+    --paper: #EEF0EC;
+    --panel: #E1E6E1;
+    --ink: #1B2420;
+    --ink-soft: #52605A;
+    --land: #D3DDCF;
+    --land-line: #93A58F;
+    --rule: #C9D1C6;
+    --signal: #B3380A;
+    --link: #0B5A74;
+    --font-body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+    --font-code: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #11190F;
+      --panel: #172117;
+      --ink: #E8EFE6;
+      --ink-soft: #A3B4A0;
+      --land: #223222;
+      --land-line: #476047;
+      --rule: #2C3E2B;
+      --signal: #FF8F55;
+      --link: #7CC8E3;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #11190F;
+    --panel: #172117;
+    --ink: #E8EFE6;
+    --ink-soft: #A3B4A0;
+    --land: #223222;
+    --land-line: #476047;
+    --rule: #2C3E2B;
+    --signal: #FF8F55;
+    --link: #7CC8E3;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    padding-block: 2.5rem 4rem;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .page { max-width: 1040px; margin: 0 auto; }
+
+  .kicker {
+    font-family: var(--font-code);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin: 0 0 0.5rem;
+  }
+  h1 {
+    font-size: clamp(1.8rem, 5.5vw, 2.7rem);
+    line-height: 1.2;
+    font-weight: 700;
+    margin: 0 0 1.25rem;
+    text-wrap: balance;
+  }
+  .lead {
+    font-size: 1.12rem;
+    max-width: 40em;
+    margin: 0;
+    padding-left: 1rem;
+    border-left: 3px solid var(--signal);
+    text-wrap: pretty;
+  }
+  .lead strong { font-weight: 700; }
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 3.25rem 0 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+  .sub { margin: -0.5rem 0 1.25rem; color: var(--ink-soft); font-size: 0.95rem; max-width: 44em; }
+
+  .map-box { background: var(--panel); border: 1px solid var(--rule); overflow-x: auto; }
+  .map-box svg { display: block; width: 100%; min-width: 760px; height: auto; }
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem;
+    margin: 0.75rem 0 0; font-size: 0.85rem; color: var(--ink-soft);
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .legend i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; background: var(--signal); }
+  .legend i.plan { background: transparent; border: 2px dashed var(--signal); }
+  .legend i.line { width: 22px; height: 0; border-radius: 0; background: none; border-top: 2px dashed var(--ink-soft); }
+
+  .terms {
+    list-style: none; margin: 2rem 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2rem;
+  }
+  .terms li {
+    display: grid;
+    grid-template-columns: 1.9rem minmax(0, 1fr);
+    gap: 0.7rem;
+    padding: 0.8rem 0.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .terms li:nth-child(-n+2) { border-top: 1px solid var(--rule); }
+  .terms li:hover, .terms li:focus-visible { background: var(--panel); outline: none; }
+  .no {
+    width: 1.65rem; height: 1.65rem; border-radius: 50%;
+    border: 1.6px solid var(--signal); color: var(--signal);
+    font-family: var(--font-code); font-size: 0.74rem;
+    display: grid; place-items: center; margin-top: 0.15rem;
+  }
+  .no.plan { border-style: dashed; }
+  .name { font-weight: 700; }
+  .where { display: block; color: var(--ink-soft); font-size: 0.86rem; }
+  .terms p { margin: 0.2rem 0 0; font-size: 0.92rem; color: var(--ink-soft); }
+  .state {
+    font-family: var(--font-code); font-size: 0.72rem; letter-spacing: 0.04em;
+    color: var(--signal); margin-left: 0.4rem; white-space: nowrap;
+  }
+  .gl { display: inline-block; margin-top: 0.15rem; font-size: 0.84rem; color: var(--link); }
+
+  .t.on .badge { fill: var(--signal); }
+  .t.on .num { fill: var(--panel); }
+
+  .insets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.75rem 1.5rem; align-items: start; }
+  .insets figure { margin: 0; }
+  .insets figcaption { font-weight: 700; font-size: 0.95rem; margin: 0 0 0.4rem; }
+  .insets figcaption small { font-weight: 400; color: var(--ink-soft); margin-left: 0.4rem; }
+  .insets svg { display: block; width: 100%; height: auto; background: var(--panel); border: 1px solid var(--rule); }
+
+  .cases { margin: 0; }
+  .case {
+    display: grid;
+    grid-template-columns: 11.5rem minmax(0, 1fr);
+    gap: 0.5rem 1.5rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .case:first-child { padding-top: 0; }
+  .case dt { font-weight: 700; }
+  .case dd { margin: 0; max-width: 42em; }
+  .case .eg { display: block; margin-top: 0.4rem; font-size: 0.92rem; color: var(--ink-soft); }
+  .case code { font-family: var(--font-code); font-size: 0.88em; background: var(--panel); padding: 0.1em 0.4em; }
+
+  .facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
+  .facts h3 { font-size: 1.02rem; margin: 0 0 0.5rem; }
+  .facts dl { margin: 0; display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0.35rem 1rem; font-size: 0.93rem; }
+  .facts dt { color: var(--ink-soft); }
+  .facts dd { margin: 0; }
+
+  .note { font-size: 0.92rem; color: var(--ink-soft); max-width: 46em; margin: 0 0 0.75rem; }
+  .src { font-size: 0.9rem; padding-left: 1.2rem; margin: 0; color: var(--ink-soft); }
+  .src a { color: var(--link); }
+
+  .ov-grid { display: grid; grid-template-columns: minmax(0, 600px) minmax(0, 1fr); gap: 2rem; align-items: start; }
+  .ov-grid .map-box svg { min-width: 560px; }
+  .side { display: grid; gap: 1.75rem; }
+  .side h3 { font-size: 1.02rem; margin: 0 0 0.5rem; }
+  .spot { border: 1.5px solid var(--signal); background: var(--panel); padding: 1rem 1.1rem; }
+  .spot .tag { font-family: var(--font-code); font-size: 0.8rem; letter-spacing: 0.08em; color: var(--signal); margin: 0 0 0.25rem; }
+  .spot p { margin: 0 0 0.6rem; font-size: 0.93rem; }
+  .spot ul { margin: 0; padding-left: 1.1rem; font-size: 0.92rem; }
+  .spot li { margin-bottom: 0.45rem; }
+  .spot li:last-child { margin-bottom: 0; }
+  .region { margin: 0 0 0.75rem; display: grid; grid-template-columns: 4.6rem minmax(0, 1fr); gap: 0.35rem 1rem; font-size: 0.93rem; }
+  .region dt { color: var(--ink-soft); }
+  .region dd { margin: 0; }
+  .t.mc .badge { fill: var(--signal); }
+  .t.mc .num { fill: var(--panel); }
+  @media (max-width: 960px) { .ov-grid { grid-template-columns: minmax(0, 1fr); } }
+
+  @media (max-width: 800px) {
+    .terms, .insets, .facts { grid-template-columns: minmax(0, 1fr); }
+    .terms li:nth-child(2) { border-top: 0; }
+    .case { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
+  }
+</style>
+
+<div class="page">
+  <header>
+    <p class="kicker">무역 실무 참고 · 2026.11.24</p>
+    <h1>베트남-중국 국경 육로 관문 지도</h1>
+    <p class="lead">베트남-중국 육로 화물은 <strong>랑선(흐우응히·떤타인·꼭남), 꽝닌 몽까이, 라오까이</strong>가 큰 축입니다. 2026년 8월 이후 꼭남의 물동량이 급감했다는 보도가 있고, 흐우응히의 양방향 화물운송 시범은 2026년 12월 9일까지입니다.</p>
+  </header>
+
+  <h2>베트남 전체 지도</h2>
+  <p class="sub">베트남 전체 윤곽 위에 육로 관문 15곳을 표시했습니다. 관문이 북부 국경에 몰려 있어 번호 배지를 지도 위쪽에 일렬로 두고 선으로 실제 위치를 이었습니다. 숫자는 아래 목록 번호와 같고, 몽까이(MONG CAI)는 붉은 원으로 강조했습니다. 관문 이름 위의 붉은 세로 글씨는 성(省) 이름이고, 오른쪽의 회색 세로 글씨는 북부·중부·남부 구분입니다(경계는 대략적인 위치).</p>
+  <div class="ov-grid">
+    <div>
+      <div class="map-box">
+        <svg id="ovmap" viewBox="0 -52 600 1122" role="img" aria-label="베트남 전체 지도 위에 중국과 맞닿은 육로 관문 15곳과 몽까이를 표시한 약식 지도"></svg>
+      </div>
+      <p class="legend">
+        <span><i></i>위치 확인</span>
+        <span><i class="plan"></i>대략 위치</span>
+        <span><i class="line"></i>국경선(약식)</span>
+        <span>위도·경도 기준</span>
+      </p>
+    </div>
+    <aside class="side">
+      <section class="spot">
+        <p class="tag">MONG CAI · 몽까이</p>
+        <h3>꽝닌성 몽까이 – 중국 광시 둥싱</h3>
+        <p>베트남 북동쪽 끝에서 박루언강(까롱강)을 사이에 두고 중국 광시의 둥싱(Dongxing)과 마주한 국경 도시입니다. 지도에서 5번, 6번이 몽까이입니다.</p>
+        <ul>
+          <li><strong>5번 박루언 2교</strong>: 무역과 수출입 화물에 쓰이는 국제관문입니다. 1교에서 하류로 약 3km 떨어져 있습니다.</li>
+          <li><strong>6번 박루언 1교</strong>: 구글 지도 리뷰에는 2026년 3월부터 현지 상거래 중심으로만 운영되고 외국인은 2교를 이용해야 한다는 글이 있습니다. 화물 통관 가능 여부는 확인이 필요합니다.</li>
+          <li><strong>운영 시간</strong>: 구글 지도의 1교 위치 항목에는 매일 07:00~20:00로 표기되어 있습니다.</li>
+          <li><strong>같은 성의 관문</strong>: 호아인모(7번), 박퐁신(8번)이 몽까이 서쪽에 있습니다.</li>
+          <li><strong>실무</strong>: 트럭 화물이 1교와 2교 중 어느 쪽에서 통관되는지, 차량 규격이 맞는지 부킹 전에 포워더에 확인하세요.</li>
+        </ul>
+      </section>
+      <section>
+        <h3>성별 관문 (15곳)</h3>
+        <dl class="region">
+          <dt>랑선</dt><dd>4곳 (1~4번) 흐우응히, 떤타인, 꼭남, 찌마</dd>
+          <dt>꽝닌</dt><dd>4곳 (5~8번) 박루언 2교·1교(몽까이), 호아인모, 박퐁신</dd>
+          <dt>까오방</dt><dd>3곳 (9~11번) 짜린, 따룽, 속장</dd>
+          <dt>하장</dt><dd>1곳 (12번) 타인투이</dd>
+          <dt>라오까이</dt><dd>2곳 (13~14번) 국경 관문, 낌타인 물류센터</dd>
+          <dt>라이쩌우</dt><dd>1곳 (15번) 마루탕, 대략 위치</dd>
+        </dl>
+        <p class="note">14번은 관문이 아니라 라오까이 국경 인근 물류센터입니다.</p>
+      </section>
+    </aside>
+  </div>
+
+  <h2>북부 국경 확대 지도</h2>
+  <p class="sub">북부 국경 육로 관문과 화물 시설 15곳을 모두 표시했습니다. 점선은 국경선, 숫자는 아래 목록 번호와 같습니다. 가까이 붙은 관문은 선으로 이어 따로 표시했습니다.</p>
+  <div class="map-box">
+    <svg id="map" viewBox="0 0 1060 570" role="img" aria-label="베트남과 중국 사이 육로 관문 15곳의 위치를 번호로 표시한 약식 지도"></svg>
+  </div>
+  <p class="legend">
+    <span><i></i>위치 확인</span>
+    <span><i class="plan"></i>대략 위치</span>
+    <span><i class="line"></i>국경선(약식)</span>
+    <span>위도·경도 기준, 모바일에서는 좌우로 밀어 볼 수 있습니다</span>
+  </p>
+
+  <ul class="terms" id="list">
+    <li data-id="1" tabindex="0">
+      <span class="no">1</span>
+      <div>
+        <span class="name">흐우응히 국제관문</span><span class="state">양방향 화물 시범</span>
+        <span class="where">Huu Nghi – Youyi Guan · 랑선 동당</span>
+        <p>1A 국도 위에 있고 랑선 시내에서 북쪽으로 약 17km, 하노이 북동쪽 약 171km입니다(구글 리뷰 기준). 화물 전용 도로가 있고 2025년 12월 10일부터 양방향 화물운송 시범이 진행 중입니다.</p>
+        <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=21.9706,106.7111" target="_blank" rel="noopener">Google 지도에서 보기</a>
+      </div>
+    </li>
+    <li data-id="2" tabindex="0">
+      <span class="no">2</span>
+      <div>
+        <span class="name">떤타인 관문</span>
+        <span class="where">Tan Thanh – Po Chai · 랑선</span>
+        <p>랑선의 화물 통관 구역입니다. 2026년 10월 랑선과 중국 핑샹 측이 무인 운반차(AGV) 시범 도입을 논의했습니다.</p>
+        <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=22.0030,106.6824" target="_blank" rel="noopener">Google 지도에서 보기</a>
+      </div>
+    </li>
+    <li data-id="3" tabindex="0">
+      <span class="no">3</span>
+      <div>
+        <span class="name">꼭남 관문</span><span class="state">물동량 급감 보도</span>
+        <span class="where">Coc Nam – Lung Nghiu · 랑선</span>
+        <p>2026년 8월 중순 이후 교역량이 90% 넘게 줄었다는 보도가 있습니다. 중국 측의 차량 규격 기준 조정 때문이라고 전해집니다.</p>
+        <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=21.9635,106.6934" target="_blank" rel="noopener">Google 지도에서 보기</a>
+      </div>
+    </li>
+    <li data-id="4" tabindex="0">
+      <span class="no">4</span>
+      <div>
+        <span class="name">찌마 국제관문</span>
+        <span class="where">Chi Ma · 랑선 마우선</span>
+        <p>흐우응히 동쪽 약 37km에 있는 랑선의 관문입니다.</p>
+        <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=21.8182,107.0269" target="_blank" rel="noopener">Google 지도에서 보기</a>
+      </div>
+    </li>
+    <li data-id="5" tabindex="0">
+      <span class="no">5</span>
+      <div>
+        <span class="name">박루언 2교 국제관문</span><span class="state">MONG CAI</span>
+        <span class="where">Mong Cai – Dongxing · 꽝닌 몽까이</span>
+        <p>무역과 수출입 화물에 쓰이는 몽까이의 국제관문입니다. 1교에서 하류로 약 3km 떨어져 있습니다.</p>
+        <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=21.5456,107.9926" target="_blank" rel="noopener">Google 지도에서 보기</a>
+      </div>
+    </li>
+    <li data-id="6" tabindex="0">
+      <span class="no">6</span>
+      <div>
+        <span class="name">박루언 1교(몽까이 국제관문)</span><span class="state">MONG CAI · 이용 제한 후기</span>
+        <span class="where">Mong Cai · 꽝닌 몽까이</span>
+        <p>구글 리뷰에 따르면 2026년 3월부터 현지 상거래 중심으로만 운영되며, 외국인은 2교를 이용해야 합니다. 화물 이용 가능 여부는 포워더에 확인하세요.</p>
+        <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=21.5358,107.9698" target="_blank" rel="noopener">Google 지도에서 보기</a>
+      </div>
+    </li>
+    <li data-id="7" tabindex="0">
+      <span class="no">7</span>
+      <div>
+        <span class="name">호아인모 관문</span>
+        <span class="where">Hoanh Mo – Dongzhong · 꽝닌 빈리에우</span>
+        <p>18C 국도 끝에 있습니다. 교역은 있으나 규모가 크지 않고 연결 도로가 적다는 평이 있습니다.</p>
+        <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=21.5975,107.4905" target="_blank" rel="noopener">Google 지도에서 보기</a>
+      </div>
+    </li>
+    <li data-id="8" tabindex="0">
+      <span class="no">8</span>
+      <div>
+        <span class="name">박퐁신 관문</span>
+        <span class="where">Bac Phong Sinh · 꽝닌 꽝득</span>
+        <p>꽝닌성 동북부의 관문입니다. 화물 통관 규모는 확인이 필요합니다.</p>
+        <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=21.6246,107.7190" target="_blank" rel="noopener">Google 지도에서 보기</a>
+      </div>
+    </li>
+    <li data-id="9" tabindex="0">
+      <span class="no">9</span>
+      <div>
+        <span class="name">짜린 국제관문</span>
+        <span class="where">Tra Linh – Longbang · 까오방</span>
+        <p>까오방의 관문으로, 국제 수준으로 승격되었다는 보도가 있습니다. 여행자 후기상 이용 규모는 작은 편입니다.</p>
+        <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=22.8724,106.3245" target="_blank" rel="noopener">Google 지도에서 보기</a>
+      </div>
+    </li>
+    <li data-id="10" tabindex="0">
+      <span class="no">10</span>
+      <div>
+        <span class="name">따룽 관문</span>
+        <span class="where">Ta Lung · 까오방 푹호아</span>
+        <p>과일, 수산물, 건자재 등을 교역하지만 구글 리뷰상 중국·베트남 국민만 통과할 수 있습니다.</p>
+        <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=22.4742,106.5797" target="_blank" rel="noopener">Google 지도에서 보기</a>
+      </div>
+    </li>
+    <li data-id="11" tabindex="0">
+      <span class="no">11</span>
+      <div>
+        <span class="name">속장 관문</span>
+        <span class="where">Soc Giang · 까오방 하꽝</span>
+        <p>까오방 서부의 관문입니다. 화물 통관 규모는 확인이 필요합니다.</p>
+        <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=22.9412,105.9953" target="_blank" rel="noopener">Google 지도에서 보기</a>
+      </div>
+    </li>
+    <li data-id="12" tabindex="0">
+      <span class="no">12</span>
+      <div>
+        <span class="name">타인투이 국제관문</span>
+        <span class="where">Thanh Thuy – Tianbao · 하장(구글 지도상 뚜옌꽝성)</span>
+        <p>하장 시내에서 약 25km 거리이며 중국 윈난성 톈바오와 이어집니다(구글 리뷰 기준).</p>
+        <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=22.9358,104.8502" target="_blank" rel="noopener">Google 지도에서 보기</a>
+      </div>
+    </li>
+    <li data-id="13" tabindex="0">
+      <span class="no">13</span>
+      <div>
+        <span class="name">라오까이 국경 관문</span>
+        <span class="where">Lao Cai – Hekou · 라오까이</span>
+        <p>다리를 건너 중국 윈난성 허커우와 이어지는 관문입니다.</p>
+        <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=22.5065,103.9658" target="_blank" rel="noopener">Google 지도에서 보기</a>
+      </div>
+    </li>
+    <li data-id="14" tabindex="0">
+      <span class="no">14</span>
+      <div>
+        <span class="name">낌타인 물류센터</span>
+        <span class="where">Kim Thanh Logistics · 라오까이</span>
+        <p>라오까이 국경 인근의 화물 집결·물류 시설입니다. 구글 지도에서 물류 서비스로 분류됩니다.</p>
+        <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=22.5196,103.9384" target="_blank" rel="noopener">Google 지도에서 보기</a>
+      </div>
+    </li>
+    <li data-id="15" tabindex="0">
+      <span class="no plan">15</span>
+      <div>
+        <span class="name">마루탕 국제관문 세관</span><span class="state">대략 위치</span>
+        <span class="where">Ma Lu Thang · 라이쩌우</span>
+        <p>라이쩌우의 국제관문 세관입니다. 구글 지도의 위치가 부정확하다는 후기가 있어 대략적인 지점으로 표시했습니다.</p>
+        <a class="gl" href="https://www.google.com/maps/search/?api=1&amp;query=22.6029,103.1658" target="_blank" rel="noopener">Google 지도에서 대략 위치 보기</a>
+      </div>
+    </li>
+  </ul>
+
+  <h2>지역별 확대도</h2>
+  <p class="sub">관문이 가까이 붙어 있는 네 지역을 확대했습니다. 점선 국경선은 관문 좌표를 지나도록 그린 약식 선이며, 관문 사이 거리는 축척에 맞춰 그렸습니다.</p>
+  <div class="insets">
+    <figure>
+      <figcaption>랑선<small>흐우응히·떤타인·꼭남·찌마</small></figcaption>
+      <svg id="insetA" viewBox="0 0 400 290" role="img" aria-label="랑선 지역 관문 4곳 위치 확대도"></svg>
+    </figure>
+    <figure>
+      <figcaption>MONG CAI 몽까이·꽝닌<small>박루언 1·2교, 호아인모, 박퐁신</small></figcaption>
+      <svg id="insetB" viewBox="0 0 400 220" role="img" aria-label="꽝닌 지역 관문 4곳 위치 확대도"></svg>
+    </figure>
+    <figure>
+      <figcaption>라오까이<small>국경 관문과 낌타인 물류센터</small></figcaption>
+      <svg id="insetC" viewBox="0 0 400 290" role="img" aria-label="라오까이 국경 관문과 물류센터 위치 확대도"></svg>
+    </figure>
+    <figure>
+      <figcaption>까오방<small>속장·짜린·따룽</small></figcaption>
+      <svg id="insetD" viewBox="0 0 400 330" role="img" aria-label="까오방 지역 관문 3곳 위치 확대도"></svg>
+    </figure>
+  </div>
+
+  <h2>실무에서 이렇게 씁니다</h2>
+  <dl class="cases">
+    <div class="case">
+      <dt>중국 도착지에 맞춰 관문 고르기</dt>
+      <dd>광시(난닝 방면) 화물은 랑선의 흐우응히·떤타인이나 몽까이를, 윈난(쿤밍 방면) 화물은 라오까이–허커우를 먼저 검토합니다. 하노이권 공장에서 랑선까지는 약 170km라, 같은 광시행이라도 몽까이보다 랑선이 내륙 운송 면에서 유리한 경우가 많습니다.
+        <span class="eg">예) 하노이 인근 공장에서 난닝으로 전자부품을 보낼 때는 흐우응히 또는 떤타인 경유 견적을 먼저 받아 봅니다.</span></dd>
+    </div>
+    <div class="case">
+      <dt>흐우응히 양방향 시범의 조건</dt>
+      <dd>시범 기간 중 수출 트럭이 귀국편에 수입 화물을 싣고 돌아올 수 있고, 양방향 트럭은 국경 건너편 지정 야적장에서 최대 36시간 대기할 수 있습니다. 다른 화물 트럭은 하역 후 24시간 안에 돌아가야 합니다. 차량 한 대에 한 화주 화물만 싣고, 농산물은 한 품목만 가능하며, 혼재 화물은 시범 기간에 쓸 수 없습니다. 시범 기한이 2026년 12월 9일이라 연장 여부를 포워더에 확인하세요.</dd>
+    </div>
+    <div class="case">
+      <dt>꼭남 경유 계획은 재확인</dt>
+      <dd>8월 중순 이후 꼭남의 교역량이 90% 넘게 줄었다는 보도가 있습니다. 꼭남을 쓰던 정기 운송이 있다면 차량 규격 기준과 대체 경로(떤타인, 흐우응히)를 미리 확인해 두는 것이 안전합니다.</dd>
+    </div>
+    <div class="case">
+      <dt>스마트 국경 시범은 모니터링</dt>
+      <dd>떤타인에서는 트레일러를 분리해 무인 운반차로 옮기는 방식이, 흐우응히에서는 야간 무인 차량 시범이 추진되고 있습니다. 양측 승인을 거쳐야 하는 단계이므로 지금은 운송 계획에 넣지 말고 진행 상황만 확인하세요.</dd>
+    </div>
+    <div class="case">
+      <dt>서류에 관문 이름 병기</dt>
+      <dd>같은 지역에 관문이 여럿이면 부킹과 운송 지시서에 베트남 측과 중국 측 관문 이름을 함께 적어 착오를 줄입니다.
+        <span class="eg">예) <code>Huu Nghi – Youyi Guan</code>, <code>Tan Thanh – Po Chai</code></span></dd>
+    </div>
+  </dl>
+
+  <h2>최근 동향</h2>
+  <div class="facts">
+    <div>
+      <h3>흐우응히 양방향 화물운송 시범</h3>
+      <dl>
+        <dt>기간</dt><dd>2025년 12월 10일 ~ 2026년 12월 9일</dd>
+        <dt>방식</dt><dd>화물 전용 도로와 통관 경로로 양방향 운송</dd>
+        <dt>대기</dt><dd>양방향 트럭 최대 36시간, 그 외 24시간 내 복귀</dd>
+        <dt>제한</dt><dd>1차량 1화주, 농산물 1품목, 혼재 불가</dd>
+        <dt>주관</dt><dd>동당–랑선 국경 경제구역 관리위원회</dd>
+      </dl>
+    </div>
+    <div>
+      <h3>랑선–핑샹 스마트 국경 협의 (2026.10.19)</h3>
+      <dl>
+        <dt>떤타인</dt><dd>AGV 시범 제안, 트레일러 최대 48시간. 전자부품과 풀컨테이너부터 시작 예정</dd>
+        <dt>흐우응히</dt><dd>야간 IGV 시범을 2026년 12월 목표로 추진(20:00~22:00 예정)</dd>
+        <dt>확장 사업</dt><dd>2025년 6월 30일 착수, 총 투자 946억 동 이상, 2027년 2분기 완료 예상</dd>
+        <dt>꼭남</dt><dd>8월 중순 이후 교역량 90% 넘게 감소</dd>
+        <dt>빈응히</dt><dd>핑얼관과 짝을 이루는 관문의 재개·승격도 논의(지도에는 미표시)</dd>
+      </dl>
+    </div>
+  </div>
+
+  <h2>확인이 필요한 사항</h2>
+  <p class="note">관문 좌표는 Google 지도 기준이며, 마루탕은 위치 표기가 부정확해 대략적인 지점입니다. 이 문서는 관문의 이름과 위치를 중심으로 정리했습니다. 관문별 화물 통관 가능 품목, 차량 규격, 운영 시간은 자주 바뀌므로 포워더나 세관 공지로 최신 내용을 확인하세요. 하장은 구글 지도 주소에 뚜옌꽝성으로 표시되어 함께 적었습니다.</p>
+  <ol class="src">
+    <li><a href="https://en.qdnd.vn/economy/international-cooperation/vietnam-china-pilot-two-way-cargo-transport-at-int-l-border-gate-pair-585524" target="_blank" rel="noopener">Quan Doi Nhan Dan, 흐우응히–Youyi Guan 양방향 화물운송 시범 기사</a></li>
+    <li><a href="https://english.vov.vn/en/economy/lang-son-pingxiang-officials-push-smart-border-gate-pilot-post1342989.vov" target="_blank" rel="noopener">VOV, 랑선–핑샹 스마트 국경 협의 기사 (2026.10.20)</a></li>
+    <li><a href="https://en.baochinhphu.vn/tra-linh-longbang-borde-gates-upgraded-to-intl-level-111231229163730607.htm" target="_blank" rel="noopener">Government News, 짜린–룽방 국제 수준 승격 기사</a></li>
+    <li><a href="https://en.baochinhphu.vn/hoanh-mo-dongzhong-border-gate-pair-is-operational-111240626143035834.htm" target="_blank" rel="noopener">Government News, 호아인모–둥중 관문 운영 기사</a></li>
+  </ol>
+</div>
+
+<script>
+(function () {
+  var NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs, text) {
+    var n = document.createElementNS(NS, tag);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (text) n.textContent = text;
+    return n;
+  }
+  function halo(o) {
+    o.stroke = "var(--panel)"; o["stroke-width"] = 3.5; o["paint-order"] = "stroke"; o["stroke-linejoin"] = "round";
+    return o;
+  }
+
+  // 국경선 [경도, 위도]: 서쪽에서 동쪽, 관문 좌표를 그대로 지나도록 그린 약식 선
+  var B = [
+    [102.14,22.39],[102.40,22.72],[102.90,22.60],[103.1658,22.6029],[103.45,22.78],[103.75,22.65],
+    [103.9658,22.5065],[104.30,22.82],[104.60,22.85],[104.8502,22.9358],[105.10,23.12],[105.33,23.36],
+    [105.60,23.13],[105.80,22.95],[105.9953,22.9412],[106.3245,22.8724],[106.55,22.78],[106.64,22.60],
+    [106.5797,22.4742],[106.63,22.30],[106.70,22.12],[106.6824,22.0030],[106.6934,21.9635],[106.7111,21.9706],
+    [106.85,21.93],[107.0269,21.8182],[107.25,21.70],[107.4905,21.5975],[107.7190,21.6246],
+    [107.9698,21.5358],[107.9926,21.5456],[108.03,21.52]
+  ];
+  var coast = [
+    [107.90,21.42],[107.65,21.42],[107.40,21.32],[107.10,20.95],[106.80,20.72],[106.55,20.55],
+    [106.20,20.30],[106.0,20.0],[104.6,20.0],[104.2,20.5],[103.8,20.8],[103.2,20.9],[102.6,21.4],[102.1,21.8]
+  ];
+
+  /* ---------- 국경 전체 지도 ---------- */
+  var map = document.getElementById("map");
+  var X = function (lng) { return (lng - 101.9) * 155.7; };
+  var Y = function (lat) { return (23.65 - lat) * 168; };
+  var pts = function (arr) { return arr.map(function (p) { return X(p[0]).toFixed(1) + "," + Y(p[1]).toFixed(1); }).join(" "); };
+
+  [21, 22, 23].forEach(function (lat) {
+    map.appendChild(el("line", { x1: 0, x2: 1060, y1: Y(lat), y2: Y(lat), stroke: "var(--rule)", "stroke-dasharray": "2 5" }));
+    map.appendChild(el("text", { x: 8, y: Y(lat) - 5, "font-size": 10, "font-family": "var(--font-code)", fill: "var(--ink-soft)" }, "N " + lat + "°"));
+  });
+  [103, 104, 105, 106, 107, 108].forEach(function (lng) {
+    map.appendChild(el("line", { y1: 0, y2: 570, x1: X(lng), x2: X(lng), stroke: "var(--rule)", "stroke-dasharray": "2 5" }));
+    map.appendChild(el("text", { x: X(lng) + 5, y: 562, "font-size": 10, "font-family": "var(--font-code)", fill: "var(--ink-soft)" }, "E " + lng + "°"));
+  });
+  [["중국", 520, 34], ["라오스", 30, 480], ["통킹만", 880, 540], ["베트남", 330, 360]].forEach(function (t) {
+    map.appendChild(el("text", { x: t[1], y: t[2], "font-size": 13, "letter-spacing": 4, fill: "var(--ink-soft)", opacity: 0.7 }, t[0]));
+  });
+  map.appendChild(el("polygon", { points: pts(B.concat(coast)), fill: "var(--land)", stroke: "var(--land-line)", "stroke-width": 1.2, "stroke-linejoin": "round" }));
+  map.appendChild(el("polyline", { points: pts(B), fill: "none", stroke: "var(--ink-soft)", "stroke-width": 2, "stroke-dasharray": "7 4", "stroke-linejoin": "round" }));
+
+  // 기준 도시
+  [["하노이", 105.8542, 21.0285], ["하이퐁", 106.68, 20.86]].forEach(function (c) {
+    var cx = X(c[1]), cy = Y(c[2]);
+    map.appendChild(el("rect", { x: cx - 3, y: cy - 3, width: 6, height: 6, fill: "var(--ink-soft)" }));
+    map.appendChild(el("text", halo({ x: cx + 9, y: cy + 4, "font-size": 12, fill: "var(--ink-soft)" }), c[0]));
+  });
+
+  var groups = {};
+  // id, 이름, 실제 경도·위도, 배지 위치(bx, by), 라벨 방향, 대략 위치 여부
+  var T = [
+    { id: 1,  name: "흐우응히",      lng: 106.7111, lat: 21.9706, bx: 836, by: 232, s: "r" },
+    { id: 2,  name: "떤타인",        lng: 106.6824, lat: 22.0030, bx: 836, by: 206, s: "r" },
+    { id: 3,  name: "꼭남",          lng: 106.6934, lat: 21.9635, bx: 836, by: 258, s: "r" },
+    { id: 4,  name: "찌마",          lng: 107.0269, lat: 21.8182, bx: 876, by: 290, s: "r" },
+    { id: 5,  name: "박루언 2교",     lng: 107.9926, lat: 21.5456, bx: 962, by: 420, s: "r" },
+    { id: 6,  name: "박루언 1교",     lng: 107.9698, lat: 21.5358, bx: 940, by: 446, s: "r" },
+    { id: 7,  name: "호아인모",      lng: 107.4905, lat: 21.5975, bx: 905, by: 498, s: "r" },
+    { id: 8,  name: "박퐁신",        lng: 107.7190, lat: 21.6246, bx: 925, by: 472, s: "r" },
+    { id: 9,  name: "짜린",          lng: 106.3245, lat: 22.8724, bx: 722, by: 66,  s: "r" },
+    { id: 10, name: "따룽",          lng: 106.5797, lat: 22.4742, bx: 790, by: 172, s: "r" },
+    { id: 11, name: "속장",          lng: 105.9953, lat: 22.9412, bx: 600, by: 66,  s: "l" },
+    { id: 12, name: "타인투이",      lng: 104.8502, lat: 22.9358, bx: 459, by: 66,  s: "r" },
+    { id: 13, name: "라오까이",      lng: 103.9658, lat: 22.5065, bx: 352, by: 150, s: "r" },
+    { id: 14, name: "낌타인 물류센터", lng: 103.9384, lat: 22.5196, bx: 270, by: 150, s: "l" },
+    { id: 15, name: "마루탕 (대략)",  lng: 103.1658, lat: 22.6029, bx: 130, by: 150, s: "l", approx: true }
+  ];
+
+  T.forEach(function (t) {
+    var x = X(t.lng), y = Y(t.lat);
+    var g = el("g", { "class": "t", "data-id": t.id });
+    g.appendChild(el("line", { x1: x, y1: y, x2: t.bx, y2: t.by, stroke: "var(--signal)", "stroke-width": 1, opacity: 0.7 }));
+    if (t.approx) {
+      g.appendChild(el("circle", { cx: x, cy: y, r: 3.6, fill: "var(--panel)", stroke: "var(--signal)", "stroke-width": 1.4, "stroke-dasharray": "2 1.5" }));
+    } else {
+      g.appendChild(el("circle", { cx: x, cy: y, r: 3.4, fill: "var(--signal)" }));
+    }
+    var b = { "class": "badge", cx: t.bx, cy: t.by, r: 10, fill: "var(--panel)", stroke: "var(--signal)", "stroke-width": 1.6 };
+    if (t.approx) b["stroke-dasharray"] = "3 2";
+    g.appendChild(el("circle", b));
+    g.appendChild(el("text", { "class": "num", x: t.bx, y: t.by + 4, "text-anchor": "middle", "font-size": 11, "font-family": "var(--font-code)", "font-weight": 500, fill: "var(--signal)" }, String(t.id)));
+    var left = t.s === "l";
+    g.appendChild(el("text", halo({
+      x: left ? t.bx - 15 : t.bx + 15, y: t.by + 4.5, "text-anchor": left ? "end" : "start",
+      "font-size": 13, "font-weight": 700, fill: "var(--ink)"
+    }), t.name));
+    map.appendChild(g);
+    groups[t.id] = g;
+  });
+
+  /* ---------- 확대도 ---------- */
+  // c: lng0, lat1, s(위도 1도당 px), cos(경도 보정), ox, oy, H, km(축척 막대), pts
+  function inset(id, c) {
+    var svg = document.getElementById(id);
+    var x = function (lng) { return (lng - c.lng0) * c.s * c.cos + c.ox; };
+    var y = function (lat) { return (c.lat1 - lat) * c.s + c.oy; };
+    svg.appendChild(el("polyline", {
+      points: B.map(function (p) { return x(p[0]).toFixed(1) + "," + y(p[1]).toFixed(1); }).join(" "),
+      fill: "none", stroke: "var(--ink-soft)", "stroke-width": 2, "stroke-dasharray": "7 4", "stroke-linejoin": "round"
+    }));
+    svg.appendChild(el("text", { x: 14, y: 20, "font-size": 11, fill: "var(--ink-soft)", opacity: 0.85 }, "북쪽 방향: 중국"));
+    var barPx = c.km / 111.2 * c.s;
+    var by = c.H - 18;
+    svg.appendChild(el("line", { x1: 14, x2: 14 + barPx, y1: by, y2: by, stroke: "var(--ink-soft)", "stroke-width": 2 }));
+    svg.appendChild(el("line", { x1: 14, x2: 14, y1: by - 4, y2: by + 4, stroke: "var(--ink-soft)", "stroke-width": 2 }));
+    svg.appendChild(el("line", { x1: 14 + barPx, x2: 14 + barPx, y1: by - 4, y2: by + 4, stroke: "var(--ink-soft)", "stroke-width": 2 }));
+    svg.appendChild(el("text", { x: 14 + barPx + 8, y: by + 4, "font-size": 11, "font-family": "var(--font-code)", fill: "var(--ink-soft)" }, c.km + " km"));
+    c.pts.forEach(function (p) {
+      var px = x(p.lng), py = y(p.lat);
+      svg.appendChild(el("circle", { cx: px, cy: py, r: 5, fill: "var(--signal)", stroke: "var(--panel)", "stroke-width": 2 }));
+      if (/박루언/.test(p.name)) {
+        svg.appendChild(el("circle", { cx: px, cy: py, r: 12, fill: "none", stroke: "var(--signal)", "stroke-width": 1.6 }));
+      }
+      svg.appendChild(el("text", halo({
+        x: px + p.dx, y: py + p.dy, "text-anchor": p.a, "font-size": 12, "font-weight": 700, fill: "var(--ink)"
+      }), p.name));
+    });
+  }
+
+  inset("insetA", { lng0: 106.60, lat1: 22.05, s: 800, cos: 0.928, ox: 15, oy: 30, H: 290, km: 5, pts: [
+    { name: "2 · 떤타인 (Po Chai)",         lng: 106.6824, lat: 22.0030, dx: 9,  dy: 4,  a: "start" },
+    { name: "1 · 흐우응히 (Youyi Guan)",    lng: 106.7111, lat: 21.9706, dx: 9,  dy: 4,  a: "start" },
+    { name: "3 · 꼭남 (Lung Nghiu)",        lng: 106.6934, lat: 21.9635, dx: 9,  dy: 22, a: "start" },
+    { name: "4 · 찌마",                     lng: 107.0269, lat: 21.8182, dx: -9, dy: 4,  a: "end" }
+  ]});
+
+  inset("insetB", { lng0: 107.40, lat1: 21.70, s: 600, cos: 0.931, ox: 20, oy: 30, H: 220, km: 5, pts: [
+    { name: "7 · 호아인모",    lng: 107.4905, lat: 21.5975, dx: 9,  dy: 4,   a: "start" },
+    { name: "8 · 박퐁신",      lng: 107.7190, lat: 21.6246, dx: 9,  dy: 4,   a: "start" },
+    { name: "5 · 박루언 2교",   lng: 107.9926, lat: 21.5456, dx: -9, dy: -8,  a: "end" },
+    { name: "6 · 박루언 1교",   lng: 107.9698, lat: 21.5358, dx: -9, dy: 16,  a: "end" }
+  ]});
+
+  inset("insetC", { lng0: 103.88, lat1: 22.56, s: 2400, cos: 0.924, ox: 15, oy: 25, H: 290, km: 1, pts: [
+    { name: "14 · 낌타인 물류센터",      lng: 103.9384, lat: 22.5196, dx: -9, dy: 4, a: "end" },
+    { name: "13 · 라오까이 (Hekou)",    lng: 103.9658, lat: 22.5065, dx: 9,  dy: 4, a: "start" }
+  ]});
+
+  inset("insetD", { lng0: 105.90, lat1: 22.98, s: 480, cos: 0.923, ox: 25, oy: 20, H: 330, km: 10, pts: [
+    { name: "11 · 속장",              lng: 105.9953, lat: 22.9412, dx: 9,  dy: 4, a: "start" },
+    { name: "9 · 짜린 (Longbang)",    lng: 106.3245, lat: 22.8724, dx: 9,  dy: 4, a: "start" },
+    { name: "10 · 따룽",              lng: 106.5797, lat: 22.4742, dx: -9, dy: 4, a: "end" }
+  ]});
+
+  /* ---------- 몽까이 강조 (북부 국경 지도, 확대도) ---------- */
+  var mcx = X(107.9812), mcy = Y(21.5407);
+  map.appendChild(el("circle", { cx: mcx, cy: mcy, r: 17, fill: "none", stroke: "var(--signal)", "stroke-width": 2 }));
+  map.appendChild(el("text", halo({ x: 1040, y: mcy - 26, "text-anchor": "end", "font-size": 14, "font-weight": 700, fill: "var(--signal)" }), "MONG CAI 몽까이"));
+  document.getElementById("insetB").appendChild(el("text", halo({ x: 386, y: 22, "text-anchor": "end", "font-size": 13, "font-weight": 700, fill: "var(--signal)" }), "MONG CAI 몽까이"));
+
+  /* ---------- 베트남 전체 지도 ---------- */
+  var ovGroups = {};
+  var ov = document.getElementById("ovmap");
+  var OX = function (lng) { return (lng - 101.6) * 58; };
+  var OY = function (lat) { return (25.5 - lat) * 62; };
+  var oPts = function (arr) { return arr.map(function (p) { return OX(p[0]).toFixed(1) + "," + OY(p[1]).toFixed(1); }).join(" "); };
+
+  var coastN = [[107.90,21.42],[107.65,21.42],[107.40,21.32],[107.10,20.95],[106.80,20.72],[106.55,20.55],[106.20,20.30]];
+  var coastS = [
+    [105.9,19.6],[105.7,18.8],[106.3,18.2],[106.9,17.6],[107.3,16.8],[108.2,16.1],[108.8,15.4],
+    [109.3,14.7],[109.25,13.8],[109.3,13.0],[109.2,12.2],[109.2,11.6],[108.9,11.2],
+    [107.9,10.8],[107.1,10.4],[106.8,10.3],[106.6,9.9],[106.0,9.4],[105.4,8.7],
+    [104.8,8.6],[104.9,9.5],[105.1,10.0],[104.8,10.2],[105.1,10.9],[105.8,11.0],
+    [106.4,11.7],[107.0,12.3],[107.5,12.4],[107.6,13.4],[107.5,14.5],[107.3,15.2],
+    [106.9,16.0],[106.5,16.6],[106.0,17.0],[105.2,17.9],[105.0,18.4],[104.0,19.1],
+    [104.1,19.7],[104.6,20.0],[104.2,20.5],[103.8,20.8],[103.2,20.9],[102.6,21.4],[102.1,21.8]
+  ];
+
+  [10, 15, 20].forEach(function (lat) {
+    ov.appendChild(el("line", { x1: 0, x2: 600, y1: OY(lat), y2: OY(lat), stroke: "var(--rule)", "stroke-dasharray": "2 5" }));
+    ov.appendChild(el("text", { x: 8, y: OY(lat) - 5, "font-size": 10, "font-family": "var(--font-code)", fill: "var(--ink-soft)" }, "N " + lat + "°"));
+  });
+  [103, 105, 107, 109].forEach(function (lng) {
+    ov.appendChild(el("line", { x1: OX(lng), x2: OX(lng), y1: 190, y2: 1070, stroke: "var(--rule)", "stroke-dasharray": "2 5" }));
+    ov.appendChild(el("text", { x: OX(lng) + 5, y: 1062, "font-size": 10, "font-family": "var(--font-code)", fill: "var(--ink-soft)" }, "E " + lng + "°"));
+  });
+  [["중국", 545, 75], ["라오스", 28, 520], ["통킹만", 400, 390], ["캄보디아", 110, 950], ["남중국해", 470, 760]].forEach(function (t) {
+    ov.appendChild(el("text", { x: t[1], y: t[2], "font-size": 13, "letter-spacing": 4, fill: "var(--ink-soft)", opacity: 0.7 }, t[0]));
+  });
+  ov.appendChild(el("polygon", { points: oPts(B.concat(coastN, coastS)), fill: "var(--land)", stroke: "var(--land-line)", "stroke-width": 1.2, "stroke-linejoin": "round" }));
+  ov.appendChild(el("polyline", { points: oPts(B), fill: "none", stroke: "var(--ink-soft)", "stroke-width": 1.8, "stroke-dasharray": "6 4", "stroke-linejoin": "round" }));
+
+  [["하노이", 105.8542, 21.0285, "l"], ["하이퐁", 106.68, 20.86, "r"], ["다낭", 108.2, 16.07, "r"], ["호찌민", 106.70, 10.78, "r"]].forEach(function (c) {
+    var cx = OX(c[1]), cy = OY(c[2]);
+    var left = c[3] === "l";
+    ov.appendChild(el("rect", { x: cx - 3, y: cy - 3, width: 6, height: 6, fill: "var(--ink-soft)" }));
+    ov.appendChild(el("text", halo({ x: left ? cx - 9 : cx + 9, y: cy + 4, "text-anchor": left ? "end" : "start", "font-size": 12, fill: "var(--ink-soft)" }), c[0]));
+  });
+
+  // 경도 순(서 → 동)으로 정렬해 배지를 일렬로 놓으면 연결선이 서로 겹치지 않는다
+  var gates = [
+    { id: 15, name: "마루탕 (대략)",  lng: 103.1658, lat: 22.6029, approx: true },
+    { id: 14, name: "낌타인 물류센터", lng: 103.9384, lat: 22.5196 },
+    { id: 13, name: "라오까이",       lng: 103.9658, lat: 22.5065 },
+    { id: 12, name: "타인투이",       lng: 104.8502, lat: 22.9358 },
+    { id: 11, name: "속장",           lng: 105.9953, lat: 22.9412 },
+    { id: 9,  name: "짜린",           lng: 106.3245, lat: 22.8724 },
+    { id: 10, name: "따룽",           lng: 106.5797, lat: 22.4742 },
+    { id: 2,  name: "떤타인",         lng: 106.6824, lat: 22.0030 },
+    { id: 3,  name: "꼭남",           lng: 106.6934, lat: 21.9635 },
+    { id: 1,  name: "흐우응히",       lng: 106.7111, lat: 21.9706 },
+    { id: 4,  name: "찌마",           lng: 107.0269, lat: 21.8182 },
+    { id: 7,  name: "호아인모",       lng: 107.4905, lat: 21.5975 },
+    { id: 8,  name: "박퐁신",         lng: 107.7190, lat: 21.6246 },
+    { id: 6,  name: "박루언 1교",     lng: 107.9698, lat: 21.5358, mc: true },
+    { id: 5,  name: "박루언 2교",     lng: 107.9926, lat: 21.5456, mc: true }
+  ];
+  var prevBx = -100;
+  gates.forEach(function (t) {
+    var x = OX(t.lng), y = OY(t.lat);
+    var bx = Math.max(x, prevBx + 26), by = 135;
+    prevBx = bx;
+    t.bx = bx;
+    var g = el("g", { "class": t.mc ? "t mc" : "t", "data-id": t.id });
+    g.appendChild(el("line", { x1: bx, y1: by + 10, x2: x, y2: y, stroke: "var(--signal)", "stroke-width": 1, opacity: 0.7 }));
+    if (t.approx) {
+      g.appendChild(el("circle", { cx: x, cy: y, r: 3.6, fill: "var(--panel)", stroke: "var(--signal)", "stroke-width": 1.4, "stroke-dasharray": "2 1.5" }));
+    } else {
+      g.appendChild(el("circle", { cx: x, cy: y, r: 3.4, fill: "var(--signal)" }));
+    }
+    var b = { "class": "badge", cx: bx, cy: by, r: 10, fill: "var(--panel)", stroke: "var(--signal)", "stroke-width": 1.6 };
+    if (t.approx) b["stroke-dasharray"] = "3 2";
+    g.appendChild(el("circle", b));
+    g.appendChild(el("text", { "class": "num", x: bx, y: by + 4, "text-anchor": "middle", "font-size": 11, "font-family": "var(--font-code)", "font-weight": 500, fill: "var(--signal)" }, String(t.id)));
+    g.appendChild(el("text", halo({
+      x: bx + 4, y: by - 16, transform: "rotate(-90 " + (bx + 4) + " " + (by - 16) + ")",
+      "font-size": 12, "font-weight": 700, fill: "var(--ink)"
+    }), t.name));
+    ov.appendChild(g);
+    ovGroups[t.id] = g;
+  });
+
+  // 성(省) 이름을 세로로 표기: 관문 배지 묶음 위에 괄호와 함께
+  var provinces = [
+    { name: "라이쩌우", ids: [15] },
+    { name: "라오까이", ids: [14, 13] },
+    { name: "하장", ids: [12] },
+    { name: "까오방", ids: [11, 9, 10] },
+    { name: "랑선", ids: [2, 3, 1, 4] },
+    { name: "꽝닌", ids: [7, 8, 6, 5] }
+  ];
+  provinces.forEach(function (p) {
+    var xs = gates.filter(function (t) { return p.ids.indexOf(t.id) >= 0; }).map(function (t) { return t.bx; });
+    var x1 = Math.min.apply(null, xs) - 9, x2 = Math.max.apply(null, xs) + 9, cx = (x1 + x2) / 2;
+    ov.appendChild(el("polyline", { points: x1 + ",27 " + x1 + ",20 " + x2 + ",20 " + x2 + ",27", fill: "none", stroke: "var(--signal)", "stroke-width": 1.5 }));
+    ov.appendChild(el("text", halo({ x: cx + 5, y: 12, transform: "rotate(-90 " + (cx + 5) + " 12)", "font-size": 14, "font-weight": 700, fill: "var(--signal)" }), p.name));
+  });
+
+  // 북부·중부·남부 구분(경계는 대략적인 위치)을 오른쪽에 세로로 표기
+  [["북부", 19.5, 22.9], ["중부", 11.5, 19.5], ["남부", 8.6, 11.5]].forEach(function (r) {
+    var y1 = OY(r[2]) + 4, y2 = OY(r[1]) - 4, cy = (y1 + y2) / 2;
+    ov.appendChild(el("polyline", { points: "580," + y1 + " 588," + y1 + " 588," + y2 + " 580," + y2, fill: "none", stroke: "var(--ink-soft)", "stroke-width": 1.5 }));
+    ov.appendChild(el("text", { x: 572, y: cy, transform: "rotate(-90 572 " + cy + ")", "text-anchor": "middle", "font-size": 14, "font-weight": 700, "letter-spacing": 8, fill: "var(--ink-soft)" }, r[0]));
+  });
+
+  // 몽까이 강조
+  var ox = OX(107.9812), oy = OY(21.5407);
+  ov.appendChild(el("circle", { cx: ox, cy: oy, r: 14, fill: "none", stroke: "var(--signal)", "stroke-width": 2 }));
+  ov.appendChild(el("line", { x1: ox + 10, y1: oy + 10, x2: ox + 22, y2: oy + 24, stroke: "var(--signal)", "stroke-width": 1.5 }));
+  ov.appendChild(el("text", halo({ x: ox + 26, y: oy + 34, "font-size": 14, "font-weight": 700, fill: "var(--signal)" }), "MONG CAI 몽까이"));
+
+  /* ---------- 목록 ↔ 지도 강조 ---------- */
+  function setOn(id, on) {
+    [groups[id], ovGroups[id]].forEach(function (g) {
+      if (g) g.classList.toggle("on", on);
+    });
+  }
+  document.querySelectorAll("#list li").forEach(function (li) {
+    var id = li.getAttribute("data-id");
+    li.addEventListener("mouseenter", function () { setOn(id, true); });
+    li.addEventListener("mouseleave", function () { setOn(id, false); });
+    li.addEventListener("focus", function () { setOn(id, true); });
+    li.addEventListener("blur", function () { setOn(id, false); });
+  });
+})();
+</script>
+
+</body></html>
